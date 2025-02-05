@@ -1,0 +1,17 @@
+prompt
+prompt FA_TVNTS_DPEDIDO_FA_TVNTS_PEDIDO
+prompt
+--
+-- #VERSION1
+-- Historial de cambios
+--
+-- Version      Solicitud       Fecha      Realiza        Comentario
+-- ========== ================ =========== ============== ===========================================================================
+-- 2           RQ4              05/02/2025  ownk-dromero   . FK_FA_TVNTS_DPEDIDO_FA_TVNTS_PEDIDO
+-- ========== ================ =========== ============== ===========================================================================
+--
+--
+alter table FA_TVNTS_DPEDIDO 
+	add constraint FK_FA_TVNTS_DPEDIDO_FA_TVNTS_PEDIDO
+		foreign key (DPEDIDO_PEDIDO)   
+		references FA_TVNTS_PEDIDO (PEDIDO_PEDIDO);
