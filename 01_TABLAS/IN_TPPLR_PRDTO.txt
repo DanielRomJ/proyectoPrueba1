@@ -11,7 +11,7 @@ prompt
 -- ========== ================ =========== ============== ===========================================================================
 --
 --
-CREATE TABLE IN_TPPLR_PRDTO_PRDTO_STCK  
+CREATE TABLE IN_TPPLR_PRDTO
 (
     PRDTO_PRDTO          INT ,
 
