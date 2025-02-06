@@ -1,0 +1,14 @@
+--
+-- #VERSION1
+-- Historial de cambios
+--
+-- Version      Solicitud       Fecha      Realiza        Comentario
+-- ========== ================ =========== ============== ===========================================================================
+-- 2           RQ89              05/02/2025  ownk-dromero   . FK_FA_TVNTS_PEDIDO_CL_TCLNT_CLNT
+-- ========== ================ =========== ============== ===========================================================================
+--
+--
+alter table FA_TVNTS_PEDIDO 
+	add constraint FK_FA_TVNTS_PEDIDO_CL_TCLNT_CLNT
+		foreign key (PEDIDO_CLNT)   
+		references CL_TCLNT_CLNT (CLNT_CLNT);

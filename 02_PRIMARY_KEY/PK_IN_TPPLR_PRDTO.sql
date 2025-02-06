@@ -1,0 +1,13 @@
+--
+-- #VERSION1
+-- Historial de cambios
+--
+-- Version      Solicitud       Fecha      Realiza        Comentario
+-- ========== ================ =========== ============== ===========================================================================
+-- 2           RQ2632              05/02/2025  ownk-dromero   . PK_IN_TPPLR_PRDTO
+-- ========== ================ =========== ============== ===========================================================================
+--
+--
+alter table IN_TPPLR_PRDTO 
+	add constraint PK_IN_TPPLR_PRDTO 
+	    primary key (PRDTO_PRDTO);

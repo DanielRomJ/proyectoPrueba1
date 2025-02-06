@@ -1,0 +1,13 @@
+--
+-- #VERSION1
+-- Historial de cambios
+--
+-- Version      Solicitud       Fecha      Realiza        Comentario
+-- ========== ================ =========== ============== ===========================================================================
+-- 2           RQ212              05/02/2025  ownk-dromero   . PK_FA_TVNTS_PEDIDO
+-- ========== ================ =========== ============== ===========================================================================
+--
+--
+alter table FA_TVNTS_PEDIDO 
+	add constraint PK_FA_TVNTS_PEDIDO 
+	    primary key (PEDIDO_PEDIDO);

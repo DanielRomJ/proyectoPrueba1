@@ -1,0 +1,13 @@
+--
+-- #VERSION1
+-- Historial de cambios
+--
+-- Version      Solicitud       Fecha      Realiza        Comentario
+-- ========== ================ =========== ============== ===========================================================================
+-- 2           RQ37              05/02/2025  ownk-dromero   . PK_FA_TVNTS_DPEDIDO
+-- ========== ================ =========== ============== ===========================================================================
+--
+--
+alter table FA_TVNTS_DPEDIDO 
+	add constraint PK_FA_TVNTS_DPEDIDO 
+	    primary key (DPEDIDO_DPEDIDO);
