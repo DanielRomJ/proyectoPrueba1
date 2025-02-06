@@ -25,9 +25,9 @@ CREATE TABLE IN_TPPLR_PRDTO
 
 );
 
-COMMENT ON COLUMN IN_TPPLR_PRDTO_PRDTO_PRDTO IS 'Identificador único de producto';
-COMMENT ON COLUMN IN_TPPLR_PRDTO_PRDTO_NOMB IS 'Nombre del producto.'; 
-COMMENT ON COLUMN IN_TPPLR_PRDTO_PRDTO_DESC  IS 'Descripción del producto';               
-COMMENT ON COLUMN IN_TPPLR_PRDTO_PRDTO_PRCIO IS 'Precio del producto';
-COMMENT ON COLUMN IN_TPPLR_PRDTO_PRDTO_STCK IS 'Cantidad de producto en stock';
+COMMENT ON COLUMN IN_TPPLR_PRDTO.PRDTO_PRDTO IS 'Identificador único de producto';
+COMMENT ON COLUMN IN_TPPLR_PRDTO.PRDTO_NOMB IS 'Nombre del producto.'; 
+COMMENT ON COLUMN IN_TPPLR_PRDTO.PRDTO_DESC  IS 'Descripción del producto';               
+COMMENT ON COLUMN IN_TPPLR_PRDTO.PRDTO_PRCIO IS 'Precio del producto';
+COMMENT ON COLUMN IN_TPPLR_PRDTO.PRDTO_STCK IS 'Cantidad de producto en stock';
 

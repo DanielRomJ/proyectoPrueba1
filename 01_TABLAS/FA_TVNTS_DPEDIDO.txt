@@ -25,9 +25,9 @@ CREATE TABLE FA_TVNTS_DPEDIDO
 
 );
 
-COMMENT ON COLUMN FA_TVNTS_DPEDIDO_DPEDIDO_DPEDIDO IS 'Identificador único de detalles de pedido';
-COMMENT ON COLUMN FA_TVNTS_DPEDIDO_DPEDIDO_PEDIDO IS 'Identificador único del pedido'; 
-COMMENT ON COLUMN FA_TVNTS_DPEDIDO_DPEDIDO_PRDTO  IS 'Identificador único del producto';               
-COMMENT ON COLUMN FA_TVNTS_DPEDIDO-DPEDIDO_CNTD IS 'Cantidad de producto';
-COMMENT ON COLUMN FA_TVNTS_DPEDIDO_DPEDIDO_PRCIO IS 'Precio del producto';
+COMMENT ON COLUMN FA_TVNTS_DPEDIDO.DPEDIDO_DPEDIDO IS 'Identificador único de detalles de pedido';
+COMMENT ON COLUMN FA_TVNTS_DPEDIDO.DPEDIDO_PEDIDO IS 'Identificador único del pedido'; 
+COMMENT ON COLUMN FA_TVNTS_DPEDIDO.DPEDIDO_PRDTO  IS 'Identificador único del producto';               
+COMMENT ON COLUMN FA_TVNTS_DPEDIDO.DPEDIDO_CNTD IS 'Cantidad de producto';
+COMMENT ON COLUMN FA_TVNTS_DPEDIDO.DPEDIDO_PRCIO IS 'Precio del producto';
 

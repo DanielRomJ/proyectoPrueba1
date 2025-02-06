@@ -25,8 +25,8 @@ CREATE TABLE CL_TCLNT_CLNT
 
 );
 
-COMMENT ON COLUMN CL_TCLNT_CLNT_CLNT_CLNT IS 'Identificador único del cliente.'; 
-COMMENT ON COLUMN CL_TCLNT_CLNT_CLNT_NOMB IS 'Nombre del cliente';               
-COMMENT ON COLUMN CL_TCLNT_CLNT_CLNT_TPID IS 'Tipo de identificación del cliente';
-COMMENT ON COLUMN CL_TCLNT_CLNT_CLNT_NIT IS 'Número de identificación del cliente';
-COMMENT ON COLUMN CL_TCLNT_CLNT_CLNT_DIRE IS 'Dirección del cliente';
+COMMENT ON COLUMN CL_TCLNT_CLNT.CLNT_CLNT IS 'Identificador único del cliente.'; 
+COMMENT ON COLUMN CL_TCLNT_CLNT.CLNT_NOMB IS 'Nombre del cliente';               
+COMMENT ON COLUMN CL_TCLNT_CLNT.CLNT_TPID IS 'Tipo de identificación del cliente';
+COMMENT ON COLUMN CL_TCLNT_CLNT.CLNT_NIT IS 'Número de identificación del cliente';
+COMMENT ON COLUMN CL_TCLNT_CLNT.CLNT_DIRE IS 'Dirección del cliente';

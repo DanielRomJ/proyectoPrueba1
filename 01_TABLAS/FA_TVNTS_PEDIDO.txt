@@ -22,6 +22,6 @@ CREATE TABLE FA_TVNTS_PEDIDO
 
 );
 
-COMMENT ON COLUMN FA_TVNTS_PEDIDO_PEDIDO_PEDIDO IS 'Identificador único del pedido.'; 
-COMMENT ON COLUMN FA_TVNTS_PEDIDO_PEDIDO_CLNT  IS 'Identificador único del cliente';               
-COMMENT ON COLUMN FA_TVNTS_PEDIDO_PEDIDO_FCREA IS 'Fecha de creación del pedido';
+COMMENT ON COLUMN FA_TVNTS_PEDIDO.PEDIDO_PEDIDO IS 'Identificador único del pedido.'; 
+COMMENT ON COLUMN FA_TVNTS_PEDIDO.PEDIDO_CLNT  IS 'Identificador único del cliente';               
+COMMENT ON COLUMN FA_TVNTS_PEDIDO.PEDIDO_FCREA IS 'Fecha de creación del pedido';
