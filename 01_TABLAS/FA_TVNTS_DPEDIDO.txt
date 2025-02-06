@@ -1,4 +1,4 @@
-prompt
+﻿prompt
 prompt FA_TVNTS_DPEDIDO
 prompt
 --
@@ -21,7 +21,7 @@ CREATE TABLE FA_TVNTS_DPEDIDO
 
     DPEDIDO_CNTD             INT             constraint NN_FA_TVNTS_DPEDIDO-DPEDIDO_CNTD           NOT NULL,
 
-    DPEDIDO_PRCIO            FLOAT           constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_PRCIO          NOT NULL,
+    DPEDIDO_PRCIO            FLOAT           constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_PRCIO          NOT NULL
 
 );
 

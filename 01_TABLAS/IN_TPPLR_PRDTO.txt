@@ -1,4 +1,4 @@
-prompt
+﻿prompt
 prompt IN_TPPLR_PRDTO
 prompt
 --
@@ -21,7 +21,7 @@ CREATE TABLE IN_TPPLR_PRDTO_PRDTO_STCK
 
     PRDTO_PRCIO          FLOAT                   constraint NN_IN_TPPLR_PRDTO_PRDTO_PRCIO          NOT NULL,
 
-    PRDTO_STCK           FLOAT                   constraint IN_TPPLR_PRDTO_PRDTO_STCK              NOT NULL,
+    PRDTO_STCK           FLOAT                   constraint IN_TPPLR_PRDTO_PRDTO_STCK              NOT NULL
 
 );
 

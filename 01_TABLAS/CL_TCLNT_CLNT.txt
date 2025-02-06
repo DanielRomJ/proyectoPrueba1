@@ -1,4 +1,4 @@
-prompt
+﻿prompt
 prompt CL_TCLNT_CLNT
 prompt
 --
@@ -21,7 +21,7 @@ CREATE TABLE CL_TCLNT_CLNT
 
     CLNT_NIT                 INT(15)         constraint NN_CL_TCLNT_CLNT_CLNT_NIT          NOT NULL,
 
-    CLNT_DIRE                VARCHAR(200)    constraint NN_CL_TCLNT_CLNT_CLNT_DIRE         NOT NULL,
+    CLNT_DIRE                VARCHAR(200)    constraint NN_CL_TCLNT_CLNT_CLNT_DIRE         NOT NULL
 
 );
 
