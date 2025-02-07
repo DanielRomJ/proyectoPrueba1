@@ -1,0 +1,9 @@
+CREATE OR REPLACE PACKAGE FA_QVNTS_PEDIDO AS
+    -- Insertar un nuevo pedido
+    PROCEDURE insertar_pedido(
+        Q_PEDIDO_PEDIDO         IN       FA_TVNTS_PEDIDO.PEDIDO_PEDIDO%TYPE,
+        Q_PEDIDO_CLNT           IN       FA_TVNTS_PEDIDO.PEDIDO_CLNT%TYPE,
+        Q_PEDIDO_FCREA          IN       FA_TVNTS_PEDIDO.PEDIDO_FCREA%TYPE
+
+    );
+    END FA_QVNTS_PEDIDO;
