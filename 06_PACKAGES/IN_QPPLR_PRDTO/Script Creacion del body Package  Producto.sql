@@ -1,20 +1,3 @@
-CREATE SEQUENCE PRODUCTO_seq
-    START WITH 1
-    INCREMENT BY 1
-    NOCACHE;
-
-
-CREATE OR REPLACE PACKAGE IN_QPPLR_PRDTO AS
-    -- Insertar un nuevo producto
-    PROCEDURE insertar_producto(
-        QPRDTO_PRDTO IN IN_TPPLR_PRDTO.PRDTO_PRDTO%TYPE,
-        QPRDTO_NOMB IN IN_TPPLR_PRDTO.PRDTO_NOMB%TYPE,
-        QPRDTO_DESC IN IN_TPPLR_PRDTO.PRDTO_DESC%TYPE,
-        QPRDTO_STCK IN IN_TPPLR_PRDTO.PRDTO_STCK%TYPE,
-        QPRDTO_PRCIO IN IN_TPPLR_PRDTO.PRDTO_PRCIO%TYPE
-    );
-    END IN_QPPLR_PRDTO;
-
 CREATE OR REPLACE PACKAGE BODY IN_QPPLR_PRDTO AS
     -- Insertar un nuevo producto
     PROCEDURE insertar_producto(
@@ -37,14 +20,3 @@ CREATE OR REPLACE PACKAGE BODY IN_QPPLR_PRDTO AS
             RAISE;
     END insertar_producto;
 END IN_QPPLR_PRDTO;
-
-BEGIN
-    -- Insertar un nuevo producto
-    IN_QPPLR_PRDTO.insertar_producto( 
-        QPRDTO_PRDTO => 2,
-        QPRDTO_NOMB => 'Laptop',
-        QPRDTO_DESC => 'Lapto Hp Ryzen 3',
-        QPRDTO_STCK => 20, 
-        QPRDTO_PRCIO => 1250000
-         );
-END;
