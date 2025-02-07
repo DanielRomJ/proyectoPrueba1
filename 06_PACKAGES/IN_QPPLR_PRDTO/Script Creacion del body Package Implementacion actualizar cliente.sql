@@ -1,8 +1,3 @@
-CREATE SEQUENCE cliente_seq
-    START WITH 1
-    INCREMENT BY 1
-    NOCACHE;
-
 CREATE OR REPLACE PACKAGE CL_QCLNT_CLNT AS
     -- Insertar un nuevo cliente
     PROCEDURE insertar_cliente(
@@ -59,15 +54,3 @@ CREATE OR REPLACE PACKAGE BODY CL_QCLNT_CLNT AS
 
 
 END CL_QCLNT_CLNT;
-
-
-BEGIN
-    -- Insertar un nuevo cliente
-    CL_QCLNT_CLNT.insertar_cliente( 
-        Q_CLNT_CLNT => 2,
-        Q_CLNT_NOMB => 'Katy Perry',
-        Q_CLNT_TPID => 'CC',
-        Q_CLNT_NIT => 123455432, 
-        Q_CLNT_DIRE => 'Direccion prueba 1'
-        );
-END;
