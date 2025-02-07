@@ -1,3 +1,9 @@
+CREATE SEQUENCE pedido_seq
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE;
+
+
 CREATE OR REPLACE PACKAGE IN_QPPLR_PRDTO AS
     -- Insertar un nuevo producto
     PROCEDURE insertar_producto(
@@ -19,17 +25,27 @@ CREATE OR REPLACE PACKAGE BODY IN_QPPLR_PRDTO AS
         QPRDTO_PRCIO IN IN_TPPLR_PRDTO.PRDTO_PRCIO%TYPE
     )IS
     BEGIN 
-        INSERT INTO IN_TPPLR_PRDTO (PRDTO_PRDTO, PRDTO_NOMB, PRDTO_PRCIO, PRDTO_STCK,PRDTO_DESC)
-        VALUES (QPRDTO_PRDTO, QPRDTO_NOMB, QPRDTO_PRCIO, QPRDTO_STCK,QPRDTO_DESC);
+        INSERT INTO IN_TPPLR_PRDTO (PRDTO_PRDTO, PRDTO_NOMB,PRDTO_DESC, PRDTO_STCK, PRDTO_PRCIO)
+        VALUES (PEDIDO_SEQ.nextval, QPRDTO_NOMB,QPRDTO_DESC, QPRDTO_STCK, QPRDTO_PRCIO);
         DBMS_OUTPUT.PUT_LINE('Producto insertado correctamente.');
+        -- Confirmar la transacción
+        COMMIT;
     EXCEPTION
         WHEN OTHERS THEN
-            DBMS_OUTPUT.PUT_LINE('Error al insertar el producto: ' || SQLERRM);
+            -- En caso de error, hacer rollback y lanzar la excepción
+            ROLLBACK;
+            RAISE;
     END insertar_producto;
 END IN_QPPLR_PRDTO;
 
 BEGIN
     -- Insertar un nuevo producto
-    gestion_productos.insertar_producto(1, 'Laptop', 120050, 10,'Lapto Hp Ryzen 3');
+    IN_QPPLR_PRDTO.insertar_producto( 
+        QPRDTO_PRDTO => 2,
+        QPRDTO_NOMB => 'Laptop',
+        QPRDTO_DESC => 'Lapto Hp Ryzen 3',
+        QPRDTO_STCK => 20, 
+        QPRDTO_PRCIO => 1250000
+         );
 END;
 /
