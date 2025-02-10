@@ -9,7 +9,12 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_PEDIDO AS
         Q_PEDIDO_PEDIDO         IN       FA_TVNTS_PEDIDO.PEDIDO_PEDIDO%TYPE,
         Q_PEDIDO_CLNT           IN       FA_TVNTS_PEDIDO.PEDIDO_CLNT%TYPE,
         Q_PEDIDO_FCREA          IN       FA_TVNTS_PEDIDO.PEDIDO_FCREA%TYPE
-
+    );
+    -- Actualizar un pedido existente
+    PROCEDURE actualizar_pedido(
+        Q_PEDIDO_PEDIDO         IN       FA_TVNTS_PEDIDO.PEDIDO_PEDIDO%TYPE,
+        Q_PEDIDO_CLNT           IN       FA_TVNTS_PEDIDO.PEDIDO_CLNT%TYPE,
+        Q_PEDIDO_FCREA          IN       FA_TVNTS_PEDIDO.PEDIDO_FCREA%TYPE
     );
     END FA_QVNTS_PEDIDO;
 
@@ -31,6 +36,26 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_PEDIDO AS
             ROLLBACK;
             RAISE;
     END insertar_pedido;
+ PROCEDURE actualizar_pedido(
+        Q_PEDIDO_PEDIDO         IN       FA_TVNTS_PEDIDO.PEDIDO_PEDIDO%TYPE,
+        Q_PEDIDO_CLNT           IN       FA_TVNTS_PEDIDO.PEDIDO_CLNT%TYPE,
+        Q_PEDIDO_FCREA          IN       FA_TVNTS_PEDIDO.PEDIDO_FCREA%TYPE
+    ) IS
+    BEGIN
+        UPDATE FA_TVNTS_PEDIDO
+        SET
+            PEDIDO_CLNT = Q_PEDIDO_CLNT,
+            PEDIDO_FCREA = Q_PEDIDO_FCREA
+        WHERE
+            PEDIDO_PEDIDO = Q_PEDIDO_PEDIDO;
+
+        DBMS_OUTPUT.PUT_LINE('Pedido actualizado correctamente.');
+    EXCEPTION
+        WHEN OTHERS THEN
+            -- En caso de error, hacer rollback y lanzar la excepción
+            ROLLBACK;
+            RAISE;
+    END actualizar_pedido;
 END FA_QVNTS_PEDIDO;
 
 BEGIN
