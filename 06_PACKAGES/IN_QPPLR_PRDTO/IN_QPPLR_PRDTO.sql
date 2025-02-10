@@ -1,13 +1,47 @@
-CREATE SEQUENCE PRODUCTO_seq
-    START WITH 1
-    INCREMENT BY 1
-    NOCACHE;
-
-
+prompt
+prompt PACKAGE: IN_QPPLR_PRDTO
+prompt
 CREATE OR REPLACE PACKAGE IN_QPPLR_PRDTO AS
+  --
+    --
+    --#VERSION:0000012000
+    --
+    --
+    -- ===========================================================
+    -- IN_QPPLR_PRDTO:
+    -- ===========================================================
+    --
+    -- HISTORIAL DE CAMBIOS
+    -- =================================================================================================================================================================
+    -- Versión		GAP				Solicitud		Fecha		Realizó			Descripción
+    -- -----------	-------------	-------------	10/02/2025	-------------	----------------------------------------------------------------------------------------
+    -- 12000    					
+    -- =================================================================================================================================================================
+      
+
+    -- ============================================================
+    -- Declaracion de CONSTANTES GLOBALES
+    -- ============================================================
+    
+    
+    -- ============================================================
+    -- Declaracion de TYPES 
+    -- ============================================================
+
+
+    -- -----------------------------------------------------------------
+    -- insertar_producto
+	-- -----------------------------------------------------------------
     -- Insertar un nuevo producto
     PROCEDURE insertar_producto(
-        QPRDTO_PRDTO IN IN_TPPLR_PRDTO.PRDTO_PRDTO%TYPE,
+        QPRDTO_PRDTO OUT IN_TPPLR_PRDTO.PRDTO_PRDTO%TYPE,
+        QPRDTO_NOMB  IN IN_TPPLR_PRDTO.PRDTO_NOMB%TYPE,
+        QPRDTO_DESC  IN IN_TPPLR_PRDTO.PRDTO_DESC%TYPE,
+        QPRDTO_STCK  IN IN_TPPLR_PRDTO.PRDTO_STCK%TYPE,
+        QPRDTO_PRCIO IN IN_TPPLR_PRDTO.PRDTO_PRCIO%TYPE
+    );
+	    PROCEDURE actualizar_producto(
+        QPRDTO_PRDTO OUT IN_TPPLR_PRDTO.PRDTO_PRDTO%TYPE,
         QPRDTO_NOMB IN IN_TPPLR_PRDTO.PRDTO_NOMB%TYPE,
         QPRDTO_DESC IN IN_TPPLR_PRDTO.PRDTO_DESC%TYPE,
         QPRDTO_STCK IN IN_TPPLR_PRDTO.PRDTO_STCK%TYPE,
@@ -16,9 +50,20 @@ CREATE OR REPLACE PACKAGE IN_QPPLR_PRDTO AS
     END IN_QPPLR_PRDTO;
 
 CREATE OR REPLACE PACKAGE BODY IN_QPPLR_PRDTO AS
+    --
+    --
+    --#VERSION:0000012000
+    --
+    --
+    -- ===========================================================
+    -- PROCEDIMIENTOS Y FUNCIONES PRIVADAS 
+    -- ===========================================================
+    -- ===========================================================
+    -- PROCEDIMIENTOS Y FUNCIONES PUBLICOS
+    -- ===========================================================
     -- Insertar un nuevo producto
     PROCEDURE insertar_producto(
-        QPRDTO_PRDTO IN IN_TPPLR_PRDTO.PRDTO_PRDTO%TYPE,
+        QPRDTO_PRDTO OUT IN_TPPLR_PRDTO.PRDTO_PRDTO%TYPE,
         QPRDTO_NOMB IN IN_TPPLR_PRDTO.PRDTO_NOMB%TYPE,
         QPRDTO_DESC IN IN_TPPLR_PRDTO.PRDTO_DESC%TYPE,
         QPRDTO_STCK IN IN_TPPLR_PRDTO.PRDTO_STCK%TYPE,
@@ -36,15 +81,28 @@ CREATE OR REPLACE PACKAGE BODY IN_QPPLR_PRDTO AS
             ROLLBACK;
             RAISE;
     END insertar_producto;
-END IN_QPPLR_PRDTO;
+	PROCEDURE actualizar_producto(
+        QPRDTO_PRDTO IN IN_TPPLR_PRDTO.PRDTO_PRDTO%TYPE,
+        QPRDTO_NOMB IN IN_TPPLR_PRDTO.PRDTO_NOMB%TYPE,
+        QPRDTO_DESC IN IN_TPPLR_PRDTO.PRDTO_DESC%TYPE,
+        QPRDTO_STCK IN IN_TPPLR_PRDTO.PRDTO_STCK%TYPE,
+        QPRDTO_PRCIO IN IN_TPPLR_PRDTO.PRDTO_PRCIO%TYPE
+    ) IS
+    BEGIN
+        UPDATE IN_TPPLR_PRDTO
+        SET PRDTO_NOMB = QPRDTO_NOMB,
+            PRDTO_DESC = QPRDTO_DESC,
+            PRDTO_STCK = QPRDTO_STCK,
+            PRDTO_PRCIO = QPRDTO_PRCIO
+        WHERE PRDTO_PRDTO = QPRDTO_PRDTO;
 
-BEGIN
-    -- Insertar un nuevo producto
-    IN_QPPLR_PRDTO.insertar_producto( 
-        QPRDTO_PRDTO => 2,
-        QPRDTO_NOMB => 'Laptop',
-        QPRDTO_DESC => 'Lapto Hp Ryzen 3',
-        QPRDTO_STCK => 20, 
-        QPRDTO_PRCIO => 1250000
-         );
-END;
+        DBMS_OUTPUT.PUT_LINE('Producto actualizado correctamente.');
+        -- Confirmar la transacción
+        COMMIT;
+    EXCEPTION
+        WHEN OTHERS THEN
+            -- En caso de error, hacer rollback y lanzar la excepción
+            ROLLBACK;
+            RAISE;
+    END actualizar_producto;
+END IN_QPPLR_PRDTO;

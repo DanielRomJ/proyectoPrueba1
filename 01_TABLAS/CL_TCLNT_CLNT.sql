@@ -11,15 +11,10 @@
 CREATE TABLE CL_TCLNT_CLNT 
 (
     CLNT_CLNT                INT ,
-
     CLNT_NOMB                VARCHAR(100)    constraint NN_CL_TCLNT_CLNT_CLNT_NOMB         NOT NULL,
-
     CLNT_TPID                VARCHAR(20)     constraint NN_CL_TCLNT_CLNT_CLNT_TPID         NOT NULL,
-
     CLNT_NIT                 INT             constraint NN_CL_TCLNT_CLNT_CLNT_NIT          NOT NULL,
-
     CLNT_DIRE                VARCHAR(200)    constraint NN_CL_TCLNT_CLNT_CLNT_DIRE         NOT NULL
-
 );
 
 COMMENT ON COLUMN CL_TCLNT_CLNT.CLNT_CLNT IS 'Identificador único del cliente.'; 

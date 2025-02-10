@@ -1,0 +1,95 @@
+
+
+======================================
+=== ACTIVIDADES Semana 3/02/2025
+======================================
+Nota: Tener en cuenta la notacion de
+base de datos ORACLE (Drive)
+
+
+0. Eliminar carpetas de modulos que
+no se esten utilizando. Crear las 
+carpetas de los nuevos modulos 
+identificados
+
+
+1. Por cada modulo se debe crear
+una estructura de carpetas como se
+indica a continuacion
+
+01_TABLAS/      
+02_PRIMARY_KEY/ 
+03_FOREIGN_KEY/  
+04_TYPES/   
+05_VISTAS/
+06_PACKAGES/  
+07_INDICES/   
+08_DATA/
+99_ROLLBACK/
+
+INSTALADOR.sql
+
+
+2. Crear script de creacion de tabla
+de cada una de las entidades especificadas
+en el modelo de datos
+
+    Creacion tabla
+    Comentarios de las columnas
+    
+
+3. Crear script de PK de cada tabla
+
+
+
+4. Crear script de FK de cada tabla
+
+
+======================================
+=== ACTIVIDADES Semana 10/02/2025
+======================================
+
+
+1. Probar los ajustes del paquete de clientes
+en el cual se retorna el id cliente
+
+2. Ajustar la crecion de paquetes acorde al 
+estandar de documentacion (ver paquete CL_QCLNT_CLNT)
+
+3. Creacion de pruebas de unidad acorde a al estandar ( TEST_CL_QCLNT_CLNT.insertar_cliente.sql)
+
+
+4. Crear una tabla de tipos de identificacion 
+
+    TPID_TPID           
+    TPID_NOmb
+    TPID_Desc
+    
+    
+    CC
+    Cedula
+    Tipo de indentifacion Cedula
+    
+    TI
+    Tarje Identidad
+    Tipo de indentifacion Cedula
+    
+    NIT
+    NIT 
+    NIT segun el tipo de persona (Natural o Juridica)
+    
+    
+    Crear FK en la tabla de clientes relacionando a la tabla de TPID
+
+
+4. Aprender a usar cursores 
+    
+    Hacer una validacion usando cursores para determinar si el tipo de identifacion es valido
+
+
+5. Aprendr a usar types de base de datos ( Type Object y Type Table)
+
+6. Crear un procedimiento en el paquete CL_QCLNT_CLNT en el cual se reciba un type table de clientes para su creacion 
+
+
+

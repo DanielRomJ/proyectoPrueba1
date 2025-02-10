@@ -8,6 +8,6 @@
 -- ========== ================ =========== ============== ===========================================================================
 --
 --
-alter table FA_TVNTS_DPEDIDO 
-	add constraint PK_FA_TVNTS_DPEDIDO 
+alter table FA_TVNTS_DPEDIDO
+	add constraint PK_FA_TVNTS_DPEDIDO
 	    primary key (DPEDIDO_DPEDIDO);

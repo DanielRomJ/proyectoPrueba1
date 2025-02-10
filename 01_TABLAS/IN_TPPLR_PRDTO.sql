@@ -11,17 +11,11 @@
 CREATE TABLE IN_TPPLR_PRDTO
 (
     PRDTO_PRDTO          INT ,
-
     PRDTO_NOMB           VARCHAR(20)             constraint NN_IN_TPPLR_PRDTO_PRDTO_NOMB           NOT NULL,
-
     PRDTO_DESC           VARCHAR(500)            constraint NN_IN_TPPLR_PRDTO_PRDTO_DESC           NOT NULL,
-
     PRDTO_PRCIO          FLOAT                   constraint NN_IN_TPPLR_PRDTO_PRDTO_PRCIO          NOT NULL,
-
     PRDTO_STCK           FLOAT                   constraint IN_TPPLR_PRDTO_PRDTO_STCK              NOT NULL
-
 );
-
 COMMENT ON COLUMN IN_TPPLR_PRDTO.PRDTO_PRDTO IS 'Identificador único de producto';
 COMMENT ON COLUMN IN_TPPLR_PRDTO.PRDTO_NOMB IS 'Nombre del producto.'; 
 COMMENT ON COLUMN IN_TPPLR_PRDTO.PRDTO_DESC  IS 'Descripción del producto';               

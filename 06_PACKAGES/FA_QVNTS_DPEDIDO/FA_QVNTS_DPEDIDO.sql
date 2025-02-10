@@ -1,10 +1,32 @@
-CREATE SEQUENCE det_pedido_seq
-    START WITH 1
-    INCREMENT BY 1
-    NOCACHE;
-
+prompt
+prompt PACKAGE: FA_QVNTS_DPEDIDO
+prompt
 CREATE OR REPLACE PACKAGE FA_QVNTS_DPEDIDO AS
-    -- Insertar un nuevo detalle de pedido
+  --
+    --
+    --#VERSION:0000012000
+    --
+    --
+    -- ===========================================================
+    -- FA_QVNTS_DPEDIDO:
+    -- ===========================================================
+    --
+    -- HISTORIAL DE CAMBIOS
+    -- =================================================================================================================================================================
+    -- Versión		GAP				Solicitud		Fecha		Realizó			Descripción
+    -- -----------	-------------	-------------	----------	-------------	----------------------------------------------------------------------------------------
+    -- 12000    									10/02/2025
+    -- =================================================================================================================================================================
+      
+
+    -- ============================================================
+    -- Declaracion de CONSTANTES GLOBALES
+    -- ============================================================
+   
+    -- -----------------------------------------------------------------
+    -- insertar_DPEDIDO
+    -- -----------------------------------------------------------------
+	-- Insertar un nuevo detalle de pedido
     PROCEDURE insertar_DPEDIDO(
         QDPEDIDO_QDPEDIDO IN FA_TVNTS_DPEDIDO.DPEDIDO_DPEDIDO%TYPE,
         QDPEDIDO_QPEDIDO IN FA_TVNTS_DPEDIDO.DPEDIDO_PEDIDO%TYPE,
@@ -12,7 +34,9 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_DPEDIDO AS
         QDPEDIDO_CNTD IN FA_TVNTS_DPEDIDO.DPEDIDO_CNTD%TYPE,
         QDPEDIDO_PRCIO IN FA_TVNTS_DPEDIDO.DPEDIDO_PRCIO%TYPE
     );
-  -- Actualizar un detalle de pedido existente
+	-- ==============================================================
+	-- Actualizar un detalle de pedido existente
+	-- ==============================================================
     PROCEDURE actualizar_DPEDIDO(
         QDPEDIDO_QDPEDIDO IN FA_TVNTS_DPEDIDO.DPEDIDO_DPEDIDO%TYPE,
         QDPEDIDO_QPEDIDO IN FA_TVNTS_DPEDIDO.DPEDIDO_PEDIDO%TYPE,
@@ -20,10 +44,28 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_DPEDIDO AS
         QDPEDIDO_CNTD IN FA_TVNTS_DPEDIDO.DPEDIDO_CNTD%TYPE,
         QDPEDIDO_PRCIO IN FA_TVNTS_DPEDIDO.DPEDIDO_PRCIO%TYPE
     );
+    -- ============================================================
+    -- Declaracion de TYPES 
+    -- ============================================================
+
+
     END FA_QVNTS_DPEDIDO;
 
 CREATE OR REPLACE PACKAGE BODY FA_QVNTS_DPEDIDO AS
-    -- Insertar un nuevo detalle de pedido
+    --
+    --
+    --#VERSION:0000012000
+    --
+    --
+    -- ===========================================================
+    -- PROCEDIMIENTOS Y FUNCIONES PRIVADAS 
+    -- ===========================================================
+	--
+	--
+	-- ===========================================================
+    -- PROCEDIMIENTOS Y FUNCIONES PUBLICOS
+    -- ===========================================================
+    -- Insertar un nuevo Detalle de pedido
     PROCEDURE insertar_DPEDIDO(
         QDPEDIDO_QDPEDIDO IN FA_TVNTS_DPEDIDO.DPEDIDO_DPEDIDO%TYPE,
         QDPEDIDO_QPEDIDO IN FA_TVNTS_DPEDIDO.DPEDIDO_PEDIDO%TYPE,
@@ -41,7 +83,8 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_DPEDIDO AS
             ROLLBACK;
             RAISE;
     END insertar_DPEDIDO;
-   -- Actualizar un detalle de pedido existente
+	-- ===========================================================
+    -- Actualizar un detalle de pedido existente
     PROCEDURE actualizar_DPEDIDO(
         QDPEDIDO_QDPEDIDO IN FA_TVNTS_DPEDIDO.DPEDIDO_DPEDIDO%TYPE,
         QDPEDIDO_QPEDIDO IN FA_TVNTS_DPEDIDO.DPEDIDO_PEDIDO%TYPE,
@@ -67,14 +110,3 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_DPEDIDO AS
             RAISE;
     END actualizar_DPEDIDO;
 END FA_QVNTS_DPEDIDO;
-
-BEGIN
-    -- Insertar un nuevo detalle de pedido
-    FA_QVNTS_DPEDIDO.INSERTAR_DPEDIDO( 
-        QDPEDIDO_QDPEDIDO => 1,
-        QDPEDIDO_QPEDIDO => 1,
-        QDPEDIDO_PRDTO => 2,
-        QDPEDIDO_CNTD => 1, 
-        QDPEDIDO_PRCIO => 1250000
-         );
-END;
