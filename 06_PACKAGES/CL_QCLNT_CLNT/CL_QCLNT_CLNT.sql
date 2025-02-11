@@ -40,8 +40,8 @@ CREATE OR REPLACE PACKAGE CL_QCLNT_CLNT AS
         p_clnt_nomb         IN       CL_TCLNT_CLNT.CLNT_NOMB%TYPE,
         p_clnt_tpid         IN       CL_TCLNT_CLNT.CLNT_TPID%TYPE,
         p_clnt_nit          IN       CL_TCLNT_CLNT.CLNT_NIT%TYPE,
-        p_clnt_dire         IN       CL_TCLNT_CLNT.CLNT_DIRE%TYPE
-        p_clnt_clnt         OUT      CL_TCLNT_CLNT.CLNT_CLNT%TYPE,
+        p_clnt_dire         IN       CL_TCLNT_CLNT.CLNT_DIRE%TYPE,
+        p_clnt_clnt         OUT      CL_TCLNT_CLNT.CLNT_CLNT%TYPE
     );
 	-- -----------------------------------------------------------------
     -- actualizar_cliente
@@ -49,11 +49,11 @@ CREATE OR REPLACE PACKAGE CL_QCLNT_CLNT AS
     -- Actualizar cliente
     -- -----------------------------------------------------------------
 	PROCEDURE actualizar_cliente(
+        p_clnt_clnt         IN       CL_TCLNT_CLNT.CLNT_CLNT%TYPE,
         p_clnt_nomb         IN       CL_TCLNT_CLNT.CLNT_NOMB%TYPE,
         p_clnt_tpid         IN       CL_TCLNT_CLNT.CLNT_TPID%TYPE,
         p_clnt_nit          IN       CL_TCLNT_CLNT.CLNT_NIT%TYPE,
         p_clnt_dire         IN       CL_TCLNT_CLNT.CLNT_DIRE%TYPE
-        p_clnt_clnt         OUT      CL_TCLNT_CLNT.CLNT_CLNT%TYPE,
     );	
 END CL_QCLNT_CLNT;
 /
@@ -101,55 +101,52 @@ CREATE OR REPLACE PACKAGE BODY CL_QCLNT_CLNT AS
         p_clnt_nomb         IN       CL_TCLNT_CLNT.CLNT_NOMB%TYPE,
         p_clnt_tpid         IN       CL_TCLNT_CLNT.CLNT_TPID%TYPE,
         p_clnt_nit          IN       CL_TCLNT_CLNT.CLNT_NIT%TYPE,
-        p_clnt_dire         IN       CL_TCLNT_CLNT.CLNT_DIRE %TYPE
-        p_clnt_clnt         OUT      CL_TCLNT_CLNT.CLNT_CLNT%TYPE,
+        p_clnt_dire         IN       CL_TCLNT_CLNT.CLNT_DIRE %TYPE,
+        p_clnt_clnt         OUT      CL_TCLNT_CLNT.CLNT_CLNT%TYPE
         
     )IS       
-    cursor c_tpid IS
-    select tpid_tpid from TP_TTPO_TPID
-    where TPID_TPID = p_clnt_tpid;
+        cursor c_tpid IS
+        select tpid_tpid from TP_TTPO_TPID
+        where TPID_TPID = p_clnt_tpid;
 
-    v_tpid CL_TCLNT_CLNT.CLNT_TPID%TYPE,
-BEGIN
-	OPEN c_tpid;
-	FETCH c_tpid into v_tpid
-		
-    for i in c_tpid LOOP
-        -- Mostrar los valores
-        DBMS_OUTPUT.PUT_LINE('ID: ' || i.tpid_tpid);
-        DBMS_OUTPUT.PUT_LINE('Nombre: ' || i.tpid_nomb);
-        DBMS_OUTPUT.PUT_LINE('Descripción: ' || i.tpid_desc);
+        v_tpid CL_TCLNT_CLNT.CLNT_TPID%TYPE;
+    BEGIN
+        
+        
+            
+        for i in c_tpid LOOP
+        
+            IF i.tpid_tpid IN ('CC', 'TI', 'NIT') THEN
+                DBMS_OUTPUT.PUT_LINE('Tipo de identificación válido.');
+                
+                
+                
+                BEGIN 
+                    p_clnt_clnt := CLIENTE_SEQ.nextval;
+                    INSERT INTO CL_TCLNT_CLNT (CLNT_CLNT,CLNT_NOMB,CLNT_TPID,CLNT_NIT,CLNT_DIRE)
+                    VALUES (p_clnt_clnt,P_CLNT_NOMB,P_CLNT_TPID,P_CLNT_NIT,P_CLNT_DIRE);
+                    DBMS_OUTPUT.PUT_LINE('Cliente insertado correctamente.');
+                EXCEPTION
+                    WHEN OTHERS THEN
+                        -- En caso de error, hacer rollback y lanzar la excepción
+                        ROLLBACK;
+                        RAISE;
+                END;
+                
+            ELSE
+                DBMS_OUTPUT.PUT_LINE('Tipo de identificación no válido.');
+                
+            END IF;
+        end loop;
+        
 
-        -- Validar si el tipo de identificación es válido
-        IF i.tpid_tpid IN ('DNI', 'Pasaporte', 'Cédula') THEN
-            v_tpid_valid := TRUE;
-            DBMS_OUTPUT.PUT_LINE('Tipo de identificación válido.');
-        ELSE
-            DBMS_OUTPUT.PUT_LINE('Tipo de identificación no válido.');
-        END IF;
-    end loop;
-
-    -- Verificar si se encontró un tipo de identificación válido
-    IF v_tpid_valid THEN
-        DBMS_OUTPUT.PUT_LINE('Validación exitosa: Tipo de identificación válido encontrado.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Validación fallida: No se encontró un tipo de identificación válido.');
-    END IF;
-END;
-		
-		
-		
-    BEGIN 
-        p_clnt_clnt := CLIENTE_SEQ.nextval;
-        INSERT INTO CL_TCLNT_CLNT (CLNT_CLNT,CLNT_NOMB,CLNT_TPID,CLNT_NIT,CLNT_DIRE)
-        VALUES (p_clnt_clnt,P_CLNT_NOMB,P_CLNT_TPID,P_CLNT_NIT,P_CLNT_DIRE);
-        DBMS_OUTPUT.PUT_LINE('Cliente insertado correctamente.');
-      EXCEPTION
-        WHEN OTHERS THEN
-            -- En caso de error, hacer rollback y lanzar la excepción
-            ROLLBACK;
-            RAISE;
+        
+        
     END insertar_cliente;
+            
+		
+		
+
 END CL_QCLNT_CLNT;
 /
 prompt
