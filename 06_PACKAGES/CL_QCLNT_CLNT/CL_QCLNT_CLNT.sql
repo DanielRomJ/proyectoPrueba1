@@ -3,7 +3,7 @@ prompt PACKAGE: CL_QCLNT_CLNT
 prompt
 
 
-CREATE OR REPLACE PACKAGE CL_QCLNT_CLNT AS
+create or replace PACKAGE CL_QCLNT_CLNT AS
     --
     --
     --#VERSION:0000012000
@@ -29,7 +29,12 @@ CREATE OR REPLACE PACKAGE CL_QCLNT_CLNT AS
     -- ============================================================
     -- Declaracion de TYPES 
     -- ============================================================
- 
+
+	TYPE CL_TY_RESPUESTA IS RECORD (
+	clnt_clnt CL_TCLNT_CLNT.CLNT_CLNT%TYPE,
+    ERROR_MSG   VARCHAR2(4000)
+	);
+	TYPE CL_TY_TT_TRESSPUTA IS TABLE OF CL_TY_RESPUESTA;
     -- -----------------------------------------------------------------
     -- insertar_cliente
     -- -----------------------------------------------------------------
@@ -45,7 +50,7 @@ CREATE OR REPLACE PACKAGE CL_QCLNT_CLNT AS
         p_clnt_tpid         IN       CL_TCLNT_CLNT.CLNT_TPID%TYPE,
         p_clnt_nit          IN       CL_TCLNT_CLNT.CLNT_NIT%TYPE,
         p_clnt_dire         IN       CL_TCLNT_CLNT.CLNT_DIRE%TYPE,
-        p_clnt_clnt         OUT      CL_TCLNT_CLNT.CLNT_CLNT%TYPE
+        p_respuestas        OUT      CL_TY_RESPUESTA
     );
 	-- -----------------------------------------------------------------
     -- actualizar_cliente
@@ -60,6 +65,8 @@ CREATE OR REPLACE PACKAGE CL_QCLNT_CLNT AS
         p_clnt_dire         IN       CL_TCLNT_CLNT.CLNT_DIRE%TYPE
     );	
 END CL_QCLNT_CLNT;
+
+
 /
 prompt
 prompt PACKAGE BODY: CL_QCLNT_CLNT
@@ -100,90 +107,66 @@ CREATE OR REPLACE PACKAGE BODY CL_QCLNT_CLNT AS
     -- PROCEDIMIENTOS Y FUNCIONES PUBLICOS
     -- ===========================================================
         -- Procedimiento para insertar múltiples clientes
-    PROCEDURE insertar_clientes(
-        p_clientes          IN       CL_TY_TT_TCLNT_CLNT,
+	PROCEDURE insertar_clientes(
+		p_clientes          IN       CL_TY_TT_TCLNT_CLNT,
         p_respuestas        OUT      CL_TY_TT_TRESSPUTA
-    ) IS
-    
-    
-    BEGIN     
-        p_respuestas := CL_TY_TT_TRESSPUTA;
-    
-    
-        FOR i IN 1 .. p_clientes.COUNT LOOP
-            DECLARE
-                v_clnt_clnt CL_TCLNT_CLNT.CLNT_CLNT%TYPE;
-            BEGIN
-                -- Insertar cada cliente en la tabla
-                insertar_cliente(
-                    p_clnt_nomb => p_clientes(i).CLNT_NOMB,
-                    p_clnt_tpid => p_clientes(i).CLNT_TPID,
-                    p_clnt_nit  => p_clientes(i).CLNT_NIT,
-                    p_clnt_dire => p_clientes(i).CLNT_DIRE,
-                    p_clnt_clnt => v_clnt_clnt
-                );
-            END;
-            
-        END LOOP;
-        
-    EXCEPTION
-        WHEN OTHERS THEN
-            ROLLBACK;
-            RAISE;
-    END insertar_clientes;
+	) IS
+	BEGIN
+        p_respuestas := CL_TY_TT_TRESSPUTA();
+		FOR i IN 1 .. p_clientes.COUNT LOOP
+			DECLARE
+				v_respuesta CL_TY_RESPUESTA;
+			BEGIN
+				insertar_cliente(
+					p_clnt_nomb => p_clientes(i).CLNT_NOMB,
+					p_clnt_tpid => p_clientes(i).CLNT_TPID,
+					p_clnt_nit  => p_clientes(i).CLNT_NIT,
+					p_clnt_dire => p_clientes(i).CLNT_DIRE,
+					p_respuestas => v_respuesta
+				);
+
+				-- Agregar la respuesta a la lista de respuestas
+				p_respuestas.EXTEND;
+				p_respuestas(p_respuestas.COUNT) := v_respuesta;
+			END;
+		END LOOP;
+	EXCEPTION
+		WHEN OTHERS THEN
+			ROLLBACK;
+			RAISE;
+	END insertar_clientes;
     -- Insertar un nuevo cliente
-    PROCEDURE insertar_cliente(
-        
-        p_clnt_nomb         IN       CL_TCLNT_CLNT.CLNT_NOMB%TYPE,
-        p_clnt_tpid         IN       CL_TCLNT_CLNT.CLNT_TPID%TYPE,
-        p_clnt_nit          IN       CL_TCLNT_CLNT.CLNT_NIT%TYPE,
-        p_clnt_dire         IN       CL_TCLNT_CLNT.CLNT_DIRE %TYPE,
-        p_clnt_clnt         OUT      CL_TCLNT_CLNT.CLNT_CLNT%TYPE
-        
-    )IS       
-        cursor c_tpid IS
-        select tpid_tpid from TP_TTPO_TPID
-        where TPID_TPID = p_clnt_tpid;
-
-        v_tpid CL_TCLNT_CLNT.CLNT_TPID%TYPE;
-        
-        
-    BEGIN
-        
-        
-            
-        for i in c_tpid LOOP
-        
-            
-                DBMS_OUTPUT.PUT_LINE('Tipo de identificación válido.');
-                
-                
-                
-                BEGIN 
-                    p_clnt_clnt := CLIENTE_SEQ.nextval;
-                    INSERT INTO CL_TCLNT_CLNT (CLNT_CLNT,CLNT_NOMB,CLNT_TPID,CLNT_NIT,CLNT_DIRE)
-                    VALUES (p_clnt_clnt,P_CLNT_NOMB,P_CLNT_TPID,P_CLNT_NIT,P_CLNT_DIRE);
-                    DBMS_OUTPUT.PUT_LINE('Cliente insertado correctamente.');
-                    
-                    commit;
-                    
-                EXCEPTION
-                    WHEN OTHERS THEN
-                        DBMS_OUTPUT.PUT_LINE('Tipo de identificación no válido.');
-                        ROLLBACK;
-                        RAISE;
-                END;
-                
-            
-        end loop;
-        
-
-        
-        
-    END insertar_cliente;
+  PROCEDURE insertar_cliente(
+    p_clnt_nomb         IN       CL_TCLNT_CLNT.CLNT_NOMB%TYPE,
+    p_clnt_tpid         IN       CL_TCLNT_CLNT.CLNT_TPID%TYPE,
+    p_clnt_nit          IN       CL_TCLNT_CLNT.CLNT_NIT%TYPE,
+    p_clnt_dire         IN       CL_TCLNT_CLNT.CLNT_DIRE%TYPE,
+    p_respuestas         OUT      CL_TY_RESPUESTA
+) IS
+    cursor c_tpid IS
+        SELECT tpid_tpid FROM TP_TTPO_TPID
+        WHERE TPID_TPID = p_clnt_tpid;
+    v_tpid CL_TCLNT_CLNT.CLNT_TPID%TYPE;
+	BEGIN
+    FOR i IN c_tpid LOOP
+        BEGIN
+            p_respuestas.clnt_clnt := CLIENTE_SEQ.nextval;
+            INSERT INTO CL_TCLNT_CLNT (CLNT_CLNT, CLNT_NOMB, CLNT_TPID, CLNT_NIT, CLNT_DIRE)
+            VALUES (p_respuestas.clnt_clnt, p_clnt_nomb, p_clnt_tpid, p_clnt_nit, p_clnt_dire);
+            p_respuestas.ERROR_MSG := 'Cliente insertado correctamente.';
+            COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                p_respuestas.ERROR_MSG := 'Error al insertar el cliente: ' || SQLERRM;
+                ROLLBACK;
+                RAISE;
+        END;
+		END LOOP;
+	END insertar_cliente;
 
 END CL_QCLNT_CLNT;
 /
+
 prompt
 prompt Otorgando Permisos sobre CL_QCLNT_CLNT
 prompt
