@@ -29,11 +29,15 @@ CREATE OR REPLACE PACKAGE CL_QCLNT_CLNT AS
     -- ============================================================
     -- Declaracion de TYPES 
     -- ============================================================
-
-
+ 
     -- -----------------------------------------------------------------
     -- insertar_cliente
     -- -----------------------------------------------------------------
+     -- Procedimiento para insertar múltiples clientes
+    PROCEDURE insertar_clientes(
+        p_clientes          IN       CL_TY_TT_TCLNT_CLNT,
+        p_respuestas        OUT      CL_TY_TT_TRESSPUTA
+    );
     -- Insertar un nuevo cliente
     -- -----------------------------------------------------------------
     PROCEDURE insertar_cliente(
@@ -95,6 +99,38 @@ CREATE OR REPLACE PACKAGE BODY CL_QCLNT_CLNT AS
     -- ===========================================================
     -- PROCEDIMIENTOS Y FUNCIONES PUBLICOS
     -- ===========================================================
+        -- Procedimiento para insertar múltiples clientes
+    PROCEDURE insertar_clientes(
+        p_clientes          IN       CL_TY_TT_TCLNT_CLNT,
+        p_respuestas        OUT      CL_TY_TT_TRESSPUTA
+    ) IS
+    
+    
+    BEGIN     
+        p_respuestas := CL_TY_TT_TRESSPUTA;
+    
+    
+        FOR i IN 1 .. p_clientes.COUNT LOOP
+            DECLARE
+                v_clnt_clnt CL_TCLNT_CLNT.CLNT_CLNT%TYPE;
+            BEGIN
+                -- Insertar cada cliente en la tabla
+                insertar_cliente(
+                    p_clnt_nomb => p_clientes(i).CLNT_NOMB,
+                    p_clnt_tpid => p_clientes(i).CLNT_TPID,
+                    p_clnt_nit  => p_clientes(i).CLNT_NIT,
+                    p_clnt_dire => p_clientes(i).CLNT_DIRE,
+                    p_clnt_clnt => v_clnt_clnt
+                );
+            END;
+            
+        END LOOP;
+        
+    EXCEPTION
+        WHEN OTHERS THEN
+            ROLLBACK;
+            RAISE;
+    END insertar_clientes;
     -- Insertar un nuevo cliente
     PROCEDURE insertar_cliente(
         
@@ -110,13 +146,15 @@ CREATE OR REPLACE PACKAGE BODY CL_QCLNT_CLNT AS
         where TPID_TPID = p_clnt_tpid;
 
         v_tpid CL_TCLNT_CLNT.CLNT_TPID%TYPE;
+        
+        
     BEGIN
         
         
             
         for i in c_tpid LOOP
         
-            IF i.tpid_tpid IN ('CC', 'TI', 'NIT') THEN
+            
                 DBMS_OUTPUT.PUT_LINE('Tipo de identificación válido.');
                 
                 
@@ -126,26 +164,23 @@ CREATE OR REPLACE PACKAGE BODY CL_QCLNT_CLNT AS
                     INSERT INTO CL_TCLNT_CLNT (CLNT_CLNT,CLNT_NOMB,CLNT_TPID,CLNT_NIT,CLNT_DIRE)
                     VALUES (p_clnt_clnt,P_CLNT_NOMB,P_CLNT_TPID,P_CLNT_NIT,P_CLNT_DIRE);
                     DBMS_OUTPUT.PUT_LINE('Cliente insertado correctamente.');
+                    
+                    commit;
+                    
                 EXCEPTION
                     WHEN OTHERS THEN
-                        -- En caso de error, hacer rollback y lanzar la excepción
+                        DBMS_OUTPUT.PUT_LINE('Tipo de identificación no válido.');
                         ROLLBACK;
                         RAISE;
                 END;
                 
-            ELSE
-                DBMS_OUTPUT.PUT_LINE('Tipo de identificación no válido.');
-                
-            END IF;
+            
         end loop;
         
 
         
         
     END insertar_cliente;
-            
-		
-		
 
 END CL_QCLNT_CLNT;
 /
