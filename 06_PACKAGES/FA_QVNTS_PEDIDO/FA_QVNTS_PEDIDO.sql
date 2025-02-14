@@ -22,12 +22,6 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_PEDIDO AS
     -- ============================================================
     -- Declaracion de CONSTANTES GLOBALES
     -- ============================================================
-    PROCEDURE insertar_pedidos_dpedidos(
-        p_pedidos          IN       FA_TY_TT_PEDIDO_DPEDIDO,
-		p_pedidos_dpedidos  IN       FA_TY_TT_VNTS_PEDIDO, 
-        p_respuestas        OUT      FA_TY_TT_VNTS_RPSTA,
-        p_dpedidos          IN       FA_TY_TT_VNTS_DPEDIDO
-	);
 	     -- Procedimiento para insertar múltiples pedidos y detalles de pedido
     PROCEDURE insertar_pedidos(
         p_pedidos          IN       FA_TY_TT_VNTS_PEDIDO,
@@ -53,7 +47,7 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_PEDIDO AS
         q_pedido_fcrea          IN       FA_TVNTS_PEDIDO.PEDIDO_FCREA%TYPE
     );
     END FA_QVNTS_PEDIDO;
-create or replace PACKAGE BODY SQL_RQGWP41J1ERSEAWNRG8T23HMBS.FA_QVNTS_PEDIDO AS
+create or replace PACKAGE BODY FA_QVNTS_PEDIDO AS
     --
     --
     --#VERSION:0000012000
@@ -116,60 +110,7 @@ create or replace PACKAGE BODY SQL_RQGWP41J1ERSEAWNRG8T23HMBS.FA_QVNTS_PEDIDO AS
 			RAISE;
 	END insertar_pedidos;
 	 -- ===========================================================
-    -- Insertar un nuevos pedidos y detalles de pedido
-	PROCEDURE insertar_pedidos_dpedidos(
-        p_pedidos          IN        FA_TY_TT_PEDIDO_DPEDIDO,
-		p_pedidos_dpedidos  IN       FA_TY_TT_PEDIDO_DPEDIDO, 
-        p_respuestas        OUT      FA_TY_TT_VNTS_RPSTA,
-        p_drespuestas       OUT      FA_TY_TT_VNTS_DPRPSTA,
-        p_dpedidos          IN       FA_TY_TT_VNTS_DPEDIDO
-	) IS
-BEGIN
-    -- Inicializar la colección de respuestas
-    p_respuestas := FA_TY_TT_VNTS_RPSTA();
-    p_drespuestas := FA_TY_TT_VNTS_DPRPSTA();
-    -- Recorrer todos los pedidos
-    FOR i IN 1 .. p_pedidos.COUNT LOOP 
-        DECLARE
-            v_drespuesta FA_TY_TO_VNTS_DPRPSTA;
-            v_respuesta FA_TY_TO_VNTS_RPSTA;
-            v_pedido_id NUMBER;  -- Variable para guardar el ID del pedido insertado
-        BEGIN
-            -- Insertar Pedido
-            insertar_pedido (
-                q_pedido_clnt  => p_pedidos(i).PEDIDO_CLNT,
-                q_pedido_fcrea => p_pedidos(i).PEDIDO_FCREA,
-                p_respuesta    => v_respuesta
-            );
-
-            -- Agregar respuesta del pedido a la lista
-            p_respuestas.EXTEND;
-            p_respuestas(p_respuestas.COUNT) := v_respuesta;
-
-            -- Obtener el ID del pedido insertado (Si lo devuelve el procedimiento, ajustarlo aquí)
-            v_pedido_id := v_respuesta.PEDIDO_PEDIDO; 
-            -- Insertar los detalles del pedido
-            FOR j IN 1 .. p_dpedidos.COUNT LOOP
-                FA_QVNTS_DPEDIDO.INSERTAR_DPEDIDO(
-                    p_DPEDIDO_PEDIDO => v_pedido_id,  -- Asociar al pedido insertado
-                    p_DPEDIDO_PRDTO  => p_dpedidos(j).DPEDIDO_PRDTO,
-                    p_DPEDIDO_CNTD   => p_dpedidos(j).DPEDIDO_CNTD,
-                    p_DPEDIDO_PRCIO  => p_dpedidos(j).DPEDIDO_PRCIO,
-                    p_respuesta      => v_drespuesta
-                );
-
-                -- Agregar respuesta del detalle del pedido a la lista
-                p_drespuestas.EXTEND;
-                p_drespuestas(p_drespuestas.COUNT) := v_drespuesta;
-            END LOOP;
-        END;
-    END LOOP;   
-    COMMIT;  -- Confirmar los cambios
-EXCEPTION
-    WHEN OTHERS THEN
-        ROLLBACK;  -- Deshacer los cambios en caso de error
-        RAISE;
-END insertar_pedidos_dpedidos;
+   
 
 	-- ===========================================================
 	-- Actualizar pedido
