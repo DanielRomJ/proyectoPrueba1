@@ -1,7 +1,7 @@
 
 DECLARE
     v_clientes CL_TY_TT_TCLNT_CLNT := CL_TY_TT_TCLNT_CLNT();
-    v_respuestas CL_QCLNT_CLNT.CL_TY_TT_TRESSPUTA;
+    v_respuestas CL_TY_TT_CLNT_RPSTA;
 BEGIN
     v_clientes.EXTEND(3);
     v_clientes(1) := CL_TY_TO_TCLNT_CLNT('Prueba type msg error13si', 'CC', 123456789, 'Calle 123');
@@ -14,7 +14,8 @@ BEGIN
     FOR i IN 1 .. v_respuestas.COUNT LOOP
         DBMS_OUTPUT.PUT_LINE('Cliente ' || i || ':');
         DBMS_OUTPUT.PUT_LINE('  ID del cliente: ' || v_respuestas(i).clnt_clnt);
-        DBMS_OUTPUT.PUT_LINE('  Mensaje: ' || v_respuestas(i).ERROR_MSG);
+        DBMS_OUTPUT.PUT_LINE('  CODIGO: ' || v_respuestas(i).CLNT_CODIGO );
+		DBMS_OUTPUT.PUT_LINE('  Mensaje: ' || v_respuestas(i).CLNT_MENSAJE );
     END LOOP;
 END;
 /
