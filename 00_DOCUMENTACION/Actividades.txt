@@ -91,5 +91,21 @@ estandar de documentacion (ver paquete CL_QCLNT_CLNT)
 
 6. Crear un procedimiento en el paquete CL_QCLNT_CLNT en el cual se reciba un type table de clientes para su creacion 
 
+======================================
+=== ACTIVIDADES Semana 17/02/2025
+======================================
 
+Ajustar el paquete de pedidos para recibir un pedido y multiples detalles de pedido y solo retornar un id de pedido
+
+Crear un procedimiento que me permita consultar la infomracion de un pedido a traves de su iD
+    
+    Ref cursor y types a nivel de paquete
+    
+
+    parametros de entrada
+        ID de pedido
+        
+    parametros de salida
+        refcursor de informacion del pedido
+        refcursor de informacion de los detalles de pedido
 
