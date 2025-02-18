@@ -2,7 +2,7 @@ prompt
 prompt PACKAGE: FA_QVNTS_GSTPDIDOS
 prompt
 CREATE OR REPLACE PACKAGE FA_QVNTS_GSTPDIDOS AS
---
+    --
     --
     --#VERSION:0000012000
     --
@@ -22,6 +22,8 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_GSTPDIDOS AS
     -- ============================================================
     -- Declaracion de TYPES 
     -- ============================================================
+    
+    
     TYPE FA_TY_INFOPEDIDO IS RECORD (
         p_dpedido_pedido     FA_TVNTS_DPEDIDO.DPEDIDO_PEDIDO%TYPE,
         p_dpedido_prdto      FA_TVNTS_DPEDIDO.DPEDIDO_PRDTO%TYPE,
@@ -32,11 +34,17 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_GSTPDIDOS AS
         p_pedido_fcrea       FA_TVNTS_PEDIDO.PEDIDO_FCREA%TYPE 
     ); 
     
+    
+   
     TYPE FA_RC_INFOPEDIDO IS REF CURSOR RETURN FA_TY_INFOPEDIDO;
+    
+    
     
     -- ============================================================
     -- Declaracion de CONSTANTES GLOBALES
     -- ===========================================================
+    
+    
     -- Procedimiento para insertar pedidos con detalles
     PROCEDURE insertar_pedido_con_detalles(
         p_pedidos          IN  FA_TY_TT_VNTS_PEDIDO,          -- Lista de pedidos
@@ -45,14 +53,18 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_GSTPDIDOS AS
         p_respuestas_det   OUT FA_TY_TT_VNTS_DPRPSTA          -- Respuestas de los detalles
     );
     
+    
     -- Procedimiento para consultar información de un pedido
     PROCEDURE consultar_info(
         p_ID                    IN      FA_TVNTS_PEDIDO.PEDIDO_PEDIDO%TYPE,     -- ID DE REFERENCIA
         p_info_pedido           OUT     FA_RC_INFOPEDIDO                        -- Cursor de salida con la información del pedido
     );
     
+    
 END FA_QVNTS_GSTPDIDOS;
 /
+
+
 prompt
 prompt PACKAGE BODY: FA_QVNTS_GSTPDIDOS
 prompt
@@ -71,6 +83,8 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GSTPDIDOS AS
     -- PROCEDIMIENTOS Y FUNCIONES PUBLICOS
     -- ===========================================================
     -- Ver info de detalles y de pedido
+    
+    
     PROCEDURE consultar_info(
         p_ID                    IN      FA_TVNTS_PEDIDO.PEDIDO_PEDIDO%TYPE,     -- ID DE REFERENCIA
         p_info_pedido           OUT     FA_RC_INFOPEDIDO                        -- Cursor de salida con la información del pedido
@@ -93,6 +107,8 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GSTPDIDOS AS
         WHERE 
             PEDIDO.PEDIDO_PEDIDO = p_ID;
     END consultar_info;
+    
+    
     -- Insertar un nuevo pedido con detalles
     PROCEDURE insertar_pedido_con_detalles(
         p_pedidos          IN  FA_TY_TT_VNTS_PEDIDO,
@@ -113,41 +129,36 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GSTPDIDOS AS
         -- Recorrer la lista de pedidos
         FOR i IN 1 .. p_pedidos.COUNT LOOP
             DECLARE
-                v_respuesta_pedido FA_TY_TO_VNTS_RPSTA;
-                v_respuesta_detalle FA_TY_TO_VNTS_DPRPSTA;
+            v_respuesta_pedido FA_TY_TO_VNTS_RPSTA;
+            v_respuesta_detalle FA_TY_TO_VNTS_DPRPSTA;
             BEGIN
-                -- Insertar el pedido
-                FA_QVNTS_PEDIDO.insertar_pedido(
-                    q_pedido_clnt  => p_pedidos(i).PEDIDO_CLNT,
-                    q_pedido_fcrea => p_pedidos(i).PEDIDO_FCREA,
-                    p_respuesta   => v_respuesta_pedido
-                );
-
-                -- Obtener el ID del pedido recién insertado
-                v_pedido_id := v_respuesta_pedido.PEDIDO_PEDIDO;
-
-                -- Recorrer los detalles y asociarlos al pedido actual
-                FOR j IN 1 .. v_detalles_local.COUNT LOOP
-                    -- Verificar si el detalle corresponde al pedido actual
-                    IF v_detalles_local(j).DPEDIDO_PEDIDO IS NULL THEN
-                       -- Asignar el ID del pedido al detalle (en la copia local)
-                        v_detalles_local(j).DPEDIDO_PEDIDO := v_pedido_id;
-
-                        -- Insertar el detalle
-                        FA_QVNTS_DPEDIDO.insertar_DPEDIDO(
-                            p_DPEDIDO_PEDIDO => v_detalles_local(j).DPEDIDO_PEDIDO,
-                            p_DPEDIDO_PRDTO  => v_detalles_local(j).DPEDIDO_PRDTO,
-                            p_DPEDIDO_CNTD   => v_detalles_local(j).DPEDIDO_CNTD,
-                            p_DPEDIDO_PRCIO  => v_detalles_local(j).DPEDIDO_PRCIO,
-                            p_respuesta      => v_respuesta_detalle
-                        );
-
-                        -- Agregar la respuesta del detalle a la lista de respuestas
-                        p_respuestas_det.EXTEND;
-                        p_respuestas_det(p_respuestas_det.COUNT) := v_respuesta_detalle;
+            -- Insertar el pedido
+            FA_QVNTS_PEDIDO.insertar_pedido(
+            q_pedido_clnt  => p_pedidos(i).PEDIDO_CLNT,
+            q_pedido_fcrea => p_pedidos(i).PEDIDO_FCREA,
+            p_respuesta   => v_respuesta_pedido
+            );
+            -- Obtener el ID del pedido recién insertado
+            v_pedido_id := v_respuesta_pedido.PEDIDO_PEDIDO;
+            -- Recorrer los detalles y asociarlos al pedido actual
+            FOR j IN 1 .. v_detalles_local.COUNT LOOP                      
+                -- Verificar si el detalle corresponde al pedido actual
+                IF v_detalles_local(j).DPEDIDO_PEDIDO IS NULL THEN                                       
+                    -- Asignar el ID del pedido al detalle (en la copia local)
+                    v_detalles_local(j).DPEDIDO_PEDIDO := v_pedido_id;                                       
+                    -- Insertar el detalle
+                    FA_QVNTS_DPEDIDO.insertar_DPEDIDO(
+                    p_DPEDIDO_PEDIDO => v_detalles_local(j).DPEDIDO_PEDIDO,
+                    p_DPEDIDO_PRDTO  => v_detalles_local(j).DPEDIDO_PRDTO,
+                    p_DPEDIDO_CNTD   => v_detalles_local(j).DPEDIDO_CNTD,
+                    p_DPEDIDO_PRCIO  => v_detalles_local(j).DPEDIDO_PRCIO,
+                    p_respuesta      => v_respuesta_detalle
+                    );    
+                    -- Agregar la respuesta del detalle a la lista de respuestas
+                    p_respuestas_det.EXTEND;
+                    p_respuestas_det(p_respuestas_det.COUNT) := v_respuesta_detalle;
                     END IF;
                 END LOOP;
-
                 -- Agregar la respuesta del pedido a la lista de respuestas
                 p_respuestas.EXTEND;
                 p_respuestas(p_respuestas.COUNT) := v_respuesta_pedido;
@@ -160,8 +171,12 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GSTPDIDOS AS
             ROLLBACK;
             RAISE;
     END insertar_pedido_con_detalles;
+    
+    
 END FA_QVNTS_GSTPDIDOS;
 /
+
+
 prompt
 prompt Otorgando Permisos sobre FA_QVNTS_GSTPDIDOS
 prompt

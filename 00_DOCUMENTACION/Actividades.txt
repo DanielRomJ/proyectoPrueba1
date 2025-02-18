@@ -97,7 +97,7 @@ estandar de documentacion (ver paquete CL_QCLNT_CLNT)
 
 Ajustar el paquete de pedidos para recibir un pedido y multiples detalles de pedido y solo retornar un id de pedido
 
-Crear un procedimiento que me permita consultar la infomracion de un pedido a traves de su iD
+Crear un procedimiento que me permita consultar la informacion de un pedido a traves de su iD
     
     Ref cursor y types a nivel de paquete
     
@@ -108,4 +108,9 @@ Crear un procedimiento que me permita consultar la infomracion de un pedido a tr
     parametros de salida
         refcursor de informacion del pedido
         refcursor de informacion de los detalles de pedido
-
+=================================================
+18/02/2025
+================================
+creacion de vista Consultar pedidos y detalles pedidos
+practiar Join, left join, outer join
+funciones una funcion que muestre todos los pedidos que pueda tener un cliente
