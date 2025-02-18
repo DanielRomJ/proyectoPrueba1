@@ -1,14 +1,14 @@
 prompt
-prompt PACKAGE: FA_QVNTS_GESTION_PEDIDOS
+prompt PACKAGE: FA_QVNTS_GSTPDIDOS
 prompt
-CREATE OR REPLACE PACKAGE FA_QVNTS_GESTION_PEDIDOS AS
+CREATE OR REPLACE PACKAGE FA_QVNTS_GSTPDIDOS AS
 --
     --
     --#VERSION:0000012000
     --
     --
     -- ===========================================================
-    -- FA_QVNTS_GESTION_PEDIDOS:
+    -- FA_QVNTS_GSTPDIDOS:
     -- ===========================================================
     --
     -- HISTORIAL DE CAMBIOS
@@ -51,12 +51,12 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_GESTION_PEDIDOS AS
         p_info_pedido           OUT     FA_RC_INFOPEDIDO                        -- Cursor de salida con la información del pedido
     );
     
-END FA_QVNTS_GESTION_PEDIDOS;
+END FA_QVNTS_GSTPDIDOS;
 /
 prompt
-prompt PACKAGE BODY: FA_QVNTS_GESTION_PEDIDOS
+prompt PACKAGE BODY: FA_QVNTS_GSTPDIDOS
 prompt
-CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GESTION_PEDIDOS AS
+CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GSTPDIDOS AS
   --
     --
     --#VERSION:0000012000
@@ -160,8 +160,8 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GESTION_PEDIDOS AS
             ROLLBACK;
             RAISE;
     END insertar_pedido_con_detalles;
-END FA_QVNTS_GESTION_PEDIDOS;
+END FA_QVNTS_GSTPDIDOS;
 /
 prompt
-prompt Otorgando Permisos sobre FA_QVNTS_GESTION_PEDIDOS
+prompt Otorgando Permisos sobre FA_QVNTS_GSTPDIDOS
 prompt
