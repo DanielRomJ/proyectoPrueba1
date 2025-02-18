@@ -37,10 +37,7 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_GESTION_PEDIDOS AS
     -- ============================================================
     -- Declaracion de CONSTANTES GLOBALES
     -- ===========================================================
-    
-    -- ============================================================
     -- Procedimiento para insertar pedidos con detalles
-    -- ============================================================
     PROCEDURE insertar_pedido_con_detalles(
         p_pedidos          IN  FA_TY_TT_VNTS_PEDIDO,          -- Lista de pedidos
         p_detalles         IN  FA_TY_TT_VNTS_DPEDIDO,         -- Lista de detalles
@@ -48,9 +45,7 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_GESTION_PEDIDOS AS
         p_respuestas_det   OUT FA_TY_TT_VNTS_DPRPSTA          -- Respuestas de los detalles
     );
     
-    -- ============================================================
     -- Procedimiento para consultar información de un pedido
-    -- ============================================================
     PROCEDURE consultar_info(
         p_ID                    IN      FA_TVNTS_PEDIDO.PEDIDO_PEDIDO%TYPE,     -- ID DE REFERENCIA
         p_info_pedido           OUT     FA_RC_INFOPEDIDO                        -- Cursor de salida con la información del pedido
@@ -58,6 +53,9 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_GESTION_PEDIDOS AS
     
 END FA_QVNTS_GESTION_PEDIDOS;
 /
+prompt
+prompt PACKAGE BODY: FA_QVNTS_GESTION_PEDIDOS
+prompt
 CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GESTION_PEDIDOS AS
   --
     --
@@ -164,3 +162,6 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GESTION_PEDIDOS AS
     END insertar_pedido_con_detalles;
 END FA_QVNTS_GESTION_PEDIDOS;
 /
+prompt
+prompt Otorgando Permisos sobre FA_QVNTS_GESTION_PEDIDOS
+prompt

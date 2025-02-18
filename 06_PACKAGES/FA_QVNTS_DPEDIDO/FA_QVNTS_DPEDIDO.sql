@@ -34,11 +34,11 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_DPEDIDO AS
     -- -----------------------------------------------------------------
 	-- Insertar un nuevo detalle de pedido
     PROCEDURE insertar_DPEDIDO(
-        p_DPEDIDO_PEDIDO	IN 	FA_TVNTS_DPEDIDO.DPEDIDO_PEDIDO%TYPE,
-        p_DPEDIDO_PRDTO 		IN	FA_TVNTS_DPEDIDO.DPEDIDO_PRDTO%TYPE,
-        p_DPEDIDO_CNTD 		IN 	FA_TVNTS_DPEDIDO.DPEDIDO_CNTD%TYPE,
-        p_DPEDIDO_PRCIO 		IN 	FA_TVNTS_DPEDIDO.DPEDIDO_PRCIO%TYPE,
-		p_respuesta        OUT      FA_TY_TO_VNTS_DPRPSTA
+        p_DPEDIDO_PEDIDO	    IN 	    FA_TVNTS_DPEDIDO.DPEDIDO_PEDIDO%TYPE,
+        p_DPEDIDO_PRDTO 		IN	    FA_TVNTS_DPEDIDO.DPEDIDO_PRDTO%TYPE,
+        p_DPEDIDO_CNTD 		    IN 	    FA_TVNTS_DPEDIDO.DPEDIDO_CNTD%TYPE,
+        p_DPEDIDO_PRCIO 		IN 	    FA_TVNTS_DPEDIDO.DPEDIDO_PRCIO%TYPE,
+		p_respuesta             OUT      FA_TY_TO_VNTS_DPRPSTA
     );
 	-- ==============================================================
 	-- Actualizar un detalle de pedido existente
@@ -55,8 +55,11 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_DPEDIDO AS
     -- ============================================================
 
 
-    END FA_QVNTS_DPEDIDO;
+END FA_QVNTS_DPEDIDO;
 
+prompt
+prompt PACKAGE BODY: FA_QVNTS_DPEDIDO
+prompt
 CREATE OR REPLACE PACKAGE BODY FA_QVNTS_DPEDIDO AS
     --
     --
@@ -151,3 +154,6 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_DPEDIDO AS
             RAISE;
     END actualizar_DPEDIDO;
 END FA_QVNTS_DPEDIDO;
+prompt
+prompt Otorgando Permisos sobre FA_QVNTS_DPEDIDO
+prompt

@@ -15,7 +15,7 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('Producto ID: ' || v_row.p_dpedido_prdto);
         DBMS_OUTPUT.PUT_LINE('Cantidad: ' || v_row.p_dpedido_cntd);
         DBMS_OUTPUT.PUT_LINE('Precio: ' || v_row.p_dpedido_prcio);
-        DBMS_OUTPUT.PUT_LINE('Detalle ID: ' || v_row.p_dpedido_dpedido);
+        DBMS_OUTPUT.PUT_LINE('Detalle Pedido ID: ' || v_row.p_dpedido_dpedido);
         DBMS_OUTPUT.PUT_LINE('Cliente ID: ' || v_row.p_pedido_clnt);
         DBMS_OUTPUT.PUT_LINE('Fecha Creación: ' || TO_CHAR(v_row.p_pedido_fcrea, 'DD/MM/YYYY HH24:MI:SS'));
         DBMS_OUTPUT.PUT_LINE('----------------------------------');
