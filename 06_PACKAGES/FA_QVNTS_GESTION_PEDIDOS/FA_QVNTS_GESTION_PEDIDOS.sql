@@ -22,20 +22,42 @@ CREATE OR REPLACE PACKAGE FA_QVNTS_GESTION_PEDIDOS AS
     -- ============================================================
     -- Declaracion de TYPES 
     -- ============================================================
+    TYPE FA_TY_INFOPEDIDO IS RECORD (
+        p_dpedido_pedido     FA_TVNTS_DPEDIDO.DPEDIDO_PEDIDO%TYPE,
+        p_dpedido_prdto      FA_TVNTS_DPEDIDO.DPEDIDO_PRDTO%TYPE,
+        p_dpedido_cntd 	     FA_TVNTS_DPEDIDO.DPEDIDO_CNTD%TYPE,
+        p_dpedido_prcio      FA_TVNTS_DPEDIDO.DPEDIDO_PRCIO%TYPE,
+        p_dpedido_dpedido    FA_TVNTS_DPEDIDO.DPEDIDO_DPEDIDO%TYPE,
+        p_pedido_clnt        FA_TVNTS_PEDIDO.PEDIDO_CLNT%TYPE,
+        p_pedido_fcrea       FA_TVNTS_PEDIDO.PEDIDO_FCREA%TYPE 
+    ); 
+    
+    TYPE FA_RC_INFOPEDIDO IS REF CURSOR RETURN FA_TY_INFOPEDIDO;
     
     -- ============================================================
     -- Declaracion de CONSTANTES GLOBALES
+    -- ===========================================================
+    
     -- ============================================================
     -- Procedimiento para insertar pedidos con detalles
+    -- ============================================================
     PROCEDURE insertar_pedido_con_detalles(
         p_pedidos          IN  FA_TY_TT_VNTS_PEDIDO,          -- Lista de pedidos
         p_detalles         IN  FA_TY_TT_VNTS_DPEDIDO,         -- Lista de detalles
         p_respuestas       OUT FA_TY_TT_VNTS_RPSTA,           -- Respuestas de los pedidos
         p_respuestas_det   OUT FA_TY_TT_VNTS_DPRPSTA          -- Respuestas de los detalles
     );
+    
+    -- ============================================================
+    -- Procedimiento para consultar información de un pedido
+    -- ============================================================
+    PROCEDURE consultar_info(
+        p_ID                    IN      FA_TVNTS_PEDIDO.PEDIDO_PEDIDO%TYPE,     -- ID DE REFERENCIA
+        p_info_pedido           OUT     FA_RC_INFOPEDIDO                        -- Cursor de salida con la información del pedido
+    );
+    
 END FA_QVNTS_GESTION_PEDIDOS;
 /
-
 CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GESTION_PEDIDOS AS
   --
     --
@@ -50,6 +72,29 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GESTION_PEDIDOS AS
 	-- ===========================================================
     -- PROCEDIMIENTOS Y FUNCIONES PUBLICOS
     -- ===========================================================
+    -- Ver info de detalles y de pedido
+    PROCEDURE consultar_info(
+        p_ID                    IN      FA_TVNTS_PEDIDO.PEDIDO_PEDIDO%TYPE,     -- ID DE REFERENCIA
+        p_info_pedido           OUT     FA_RC_INFOPEDIDO                        -- Cursor de salida con la información del pedido
+    ) IS
+    BEGIN
+        -- Se abre el cursor con la consulta
+        OPEN p_info_pedido FOR
+        SELECT 
+            DPEDIDO.DPEDIDO_PEDIDO, 
+            DPEDIDO.DPEDIDO_PRDTO,  
+            DPEDIDO.DPEDIDO_CNTD,	  
+            DPEDIDO.DPEDIDO_PRCIO,  
+            DPEDIDO.DPEDIDO_DPEDIDO,
+            PEDIDO.PEDIDO_CLNT,    
+            PEDIDO.PEDIDO_FCREA   
+        FROM 
+            FA_TVNTS_PEDIDO PEDIDO
+        JOIN 
+            FA_TVNTS_DPEDIDO DPEDIDO ON DPEDIDO.DPEDIDO_PEDIDO = PEDIDO.PEDIDO_PEDIDO
+        WHERE 
+            PEDIDO.PEDIDO_PEDIDO = p_ID;
+    END consultar_info;
     -- Insertar un nuevo pedido con detalles
     PROCEDURE insertar_pedido_con_detalles(
         p_pedidos          IN  FA_TY_TT_VNTS_PEDIDO,
@@ -87,7 +132,7 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GESTION_PEDIDOS AS
                 FOR j IN 1 .. v_detalles_local.COUNT LOOP
                     -- Verificar si el detalle corresponde al pedido actual
                     IF v_detalles_local(j).DPEDIDO_PEDIDO IS NULL THEN
-                        -- Asignar el ID del pedido al detalle (en la copia local)
+                       -- Asignar el ID del pedido al detalle (en la copia local)
                         v_detalles_local(j).DPEDIDO_PEDIDO := v_pedido_id;
 
                         -- Insertar el detalle
