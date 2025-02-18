@@ -1,4 +1,31 @@
+prompt
+prompt PACKAGE: FA_QVNTS_GESTION_PEDIDOS
+prompt
 CREATE OR REPLACE PACKAGE FA_QVNTS_GESTION_PEDIDOS AS
+--
+    --
+    --#VERSION:0000012000
+    --
+    --
+    -- ===========================================================
+    -- FA_QVNTS_GESTION_PEDIDOS:
+    -- ===========================================================
+    --
+    -- HISTORIAL DE CAMBIOS
+    -- =================================================================================================================================================================
+    -- Versión		GAP				Solicitud		Fecha		Realizó			Descripción
+    -- -----------	-------------	-------------	----------	-------------	----------------------------------------------------------------------------------------
+    -- 12000    									14/02/2025
+    -- =================================================================================================================================================================
+      
+    
+    -- ============================================================
+    -- Declaracion de TYPES 
+    -- ============================================================
+    
+    -- ============================================================
+    -- Declaracion de CONSTANTES GLOBALES
+    -- ============================================================
     -- Procedimiento para insertar pedidos con detalles
     PROCEDURE insertar_pedido_con_detalles(
         p_pedidos          IN  FA_TY_TT_VNTS_PEDIDO,          -- Lista de pedidos
@@ -10,6 +37,20 @@ END FA_QVNTS_GESTION_PEDIDOS;
 /
 
 CREATE OR REPLACE PACKAGE BODY FA_QVNTS_GESTION_PEDIDOS AS
+  --
+    --
+    --#VERSION:0000012000
+    --
+    --
+    -- ===========================================================
+    -- PROCEDIMIENTOS Y FUNCIONES PRIVADAS 
+    -- ===========================================================
+	--
+	--
+	-- ===========================================================
+    -- PROCEDIMIENTOS Y FUNCIONES PUBLICOS
+    -- ===========================================================
+    -- Insertar un nuevo pedido con detalles
     PROCEDURE insertar_pedido_con_detalles(
         p_pedidos          IN  FA_TY_TT_VNTS_PEDIDO,
         p_detalles         IN  FA_TY_TT_VNTS_DPEDIDO,
