@@ -1,0 +1,52 @@
+CREATE OR REPLACE FUNCTION Obtener_pedidos_y_detalles(
+    p_pedido_id IN FA_TVNTS_PEDIDO.PEDIDO_PEDIDO%TYPE
+)
+RETURN SYS_REFCURSOR
+AS
+    resultado SYS_REFCURSOR;
+BEGIN
+    OPEN resultado FOR
+        SELECT 
+            DPEDIDO.DPEDIDO_PEDIDO, 
+            DPEDIDO.DPEDIDO_PRDTO,  
+            DPEDIDO.DPEDIDO_CNTD,	  
+            DPEDIDO.DPEDIDO_PRCIO,  
+            DPEDIDO.DPEDIDO_DPEDIDO,
+            PEDIDO.PEDIDO_CLNT,    
+            PEDIDO.PEDIDO_FCREA   
+        FROM 
+            FA_TVNTS_PEDIDO PEDIDO
+        JOIN 
+            FA_TVNTS_DPEDIDO DPEDIDO ON DPEDIDO.DPEDIDO_PEDIDO = PEDIDO.PEDIDO_PEDIDO
+        WHERE 
+            PEDIDO.PEDIDO_PEDIDO = p_pedido_id;
+
+    RETURN resultado;
+END;
+/
+DECLARE
+    resultado SYS_REFCURSOR;
+    v_pedido FA_TVNTS_PEDIDO.PEDIDO_PEDIDO%TYPE;
+    v_prdto FA_TVNTS_DPEDIDO.DPEDIDO_PRDTO%TYPE;
+    v_cntd FA_TVNTS_DPEDIDO.DPEDIDO_CNTD%TYPE;
+    v_prcio FA_TVNTS_DPEDIDO.DPEDIDO_PRCIO%TYPE;
+    v_dpedido FA_TVNTS_DPEDIDO.DPEDIDO_DPEDIDO%TYPE;
+    v_clnt FA_TVNTS_PEDIDO.PEDIDO_CLNT%TYPE;
+    v_fcrea FA_TVNTS_PEDIDO.PEDIDO_FCREA%TYPE;
+BEGIN
+    -- Llama a la función y pasa un ID de pedido (por ejemplo, 13)
+    resultado := Obtener_pedidos_y_detalles(p_pedido_id => 13);
+
+    LOOP
+        FETCH resultado INTO v_pedido, v_prdto, v_cntd, v_prcio, v_dpedido, v_clnt, v_fcrea;
+        EXIT WHEN resultado%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(
+            'Pedido: ' || v_pedido || ', Producto: ' || v_prdto || ', Cantidad: ' || v_cntd ||
+            ', Precio: ' || v_prcio || ', Dpedido: ' || v_dpedido || ', Cliente: ' || v_clnt ||
+            ', Fecha: ' || TO_CHAR(v_fcrea, 'DD/MM/YYYY')
+        );
+    END LOOP;
+
+    CLOSE resultado;
+END;
+/
