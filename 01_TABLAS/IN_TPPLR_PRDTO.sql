@@ -10,7 +10,7 @@
 --
 CREATE TABLE IN_TPPLR_PRDTO
 (
-    PRDTO_PRDTO          INT ,
+    PRDTO_PRDTO         VARCHAR2(50),
     PRDTO_NOMB           VARCHAR(20)             constraint NN_IN_TPPLR_PRDTO_PRDTO_NOMB           NOT NULL,
     PRDTO_DESC           VARCHAR(500)            constraint NN_IN_TPPLR_PRDTO_PRDTO_DESC           NOT NULL,
     PRDTO_PRCIO          FLOAT                   constraint NN_IN_TPPLR_PRDTO_PRDTO_PRCIO          NOT NULL,

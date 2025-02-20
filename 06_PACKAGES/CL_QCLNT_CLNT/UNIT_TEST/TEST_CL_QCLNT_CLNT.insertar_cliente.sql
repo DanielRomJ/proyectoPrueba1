@@ -1,13 +1,15 @@
-DECLARE    
-    v_clnt_clnt CL_TCLNT_CLNT.CLNT_CLNT%TYPE;   
+DECLARE
+    v_respuesta CL_TY_TO_CLNT_RPSTA;
 BEGIN
-    -- Insertar un nuevo cliente
-    CL_QCLNT_CLNT.insertar_cliente( 
-        P_CLNT_CLNT => v_clnt_clnt,              --OUT      CL_TCLNT_CLNT.CLNT_CLNT%TYPE,
-        P_CLNT_NOMB => 'Mia',             --IN       CL_TCLNT_CLNT.CLNT_NOMB%TYPE,
-        P_CLNT_TPID => 'CAT',                     --IN       CL_TCLNT_CLNT.CLNT_TPID%TYPE,
-        P_CLNT_NIT => 123324455432,                 --IN       CL_TCLNT_CLNT.CLNT_NIT%TYPE,
-        P_CLNT_DIRE => 'Direccion prueba 1'      --IN       CL_TCLNT_CLNT.CLNT_DIRE%TYPE
-    );   
-    DBMS_OUTPUT.PUT_LINE('v_clnt_clnt-------------------:'||v_clnt_clnt);          
+    CL_QCLNT_CLNT.insertar_cliente(
+        p_clnt_nomb => 'Juan Pérez',
+        p_clnt_tpid => 'CC',
+        p_clnt_nit  => '123456789',
+        p_clnt_dire => 'Calle Falsa 123',
+        p_respuesta => v_respuesta
+    );
+    DBMS_OUTPUT.PUT_LINE('ID del cliente: ' || v_respuesta.clnt_clnt);
+    DBMS_OUTPUT.PUT_LINE('Código: ' || v_respuesta.CLNT_CODIGO);
+    DBMS_OUTPUT.PUT_LINE('Mensaje: ' || v_respuesta.CLNT_MENSAJE);
 END;
+/

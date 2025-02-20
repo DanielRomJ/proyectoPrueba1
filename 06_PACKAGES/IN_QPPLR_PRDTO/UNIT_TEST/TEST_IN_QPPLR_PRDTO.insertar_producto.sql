@@ -1,16 +1,13 @@
 DECLARE
-    
-    v_PRDTO_PRDTO IN_QPPLR_PRDTO.PRDTO_PRDTO%TYPE;
-    
+    v_prdto_id IN_TPPLR_PRDTO.PRDTO_PRDTO%TYPE;
 BEGIN
-	v_PRDTO_PRDTO:= 1:
-    -- Insertar un nuevo producto
-    IN_QPPLR_PRDTO.insertar_producto( 
-		QPRDTO_PRDTO => v_PRDTO_PRDTO,				--OUT IN_TPPLR_PRDTO.PRDTO_PRDTO%TYPE,
-        QPRDTO_NOMB => 'Laptop',                    --IN IN_TPPLR_PRDTO.PRDTO_NOMB%TYPE,
-        QPRDTO_DESC => 'Lapto Hp Ryzen 3',          --IN IN_TPPLR_PRDTO.PRDTO_DESC%TYPE,
-        QPRDTO_STCK => 20,                          --IN IN_TPPLR_PRDTO.PRDTO_STCK%TYPE,
-        QPRDTO_PRCIO => 1250000	                    --IN IN_TPPLR_PRDTO.PRDTO_PRCIO%TYPE
-         );
-		 DBMS_OUTPUT.PUT_LINE('v_PRDTO_PRDTO-------------------:'||v_PRDTO_PRDTO); 
+    IN_QPPLR_PRDTO.insertar_producto(
+        p_PRDTO_PRDTO => v_prdto_id,
+        p_PRDTO_NOMB  => 'Producto de prueba',
+        p_PRDTO_DESC  => 'Descripción del producto de prueba',
+        p_PRDTO_STCK  => 100,
+        p_PRDTO_PRCIO => 50.00
+    );
+    DBMS_OUTPUT.PUT_LINE('ID del producto: ' || v_prdto_id);
 END;
+/

@@ -84,16 +84,17 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_DPEDIDO AS
     )IS
     BEGIN 
 		p_respuesta := FA_TY_TO_VNTS_DPRPSTA(NULL,NULL,NULL);
-		p_respuesta.DPEDIDO_DPEDIDO := det_pedido_seq.nextval;
-        INSERT INTO FA_TVNTS_DPEDIDO (DPEDIDO_DPEDIDO,DPEDIDO_PEDIDO, DPEDIDO_PRDTO,DPEDIDO_CNTD,DPEDIDO_PRCIO)
-        VALUES (p_respuesta.DPEDIDO_DPEDIDO,p_DPEDIDO_PEDIDO, p_DPEDIDO_PRDTO,p_DPEDIDO_CNTD,p_DPEDIDO_PRCIO);
+		-- Generar un UUID usando SYS_GUID()
+		SELECT RAWTOHEX(SYS_GUID()) INTO p_respuesta.DPEDIDO_DPEDIDO FROM DUAL;
+        INSERT INTO FA_TVNTS_DPEDIDO (DPEDIDO_DPEDIDO, DPEDIDO_PEDIDO, DPEDIDO_PRDTO, DPEDIDO_CNTD, DPEDIDO_PRCIO)
+        VALUES (p_respuesta.DPEDIDO_DPEDIDO, p_DPEDIDO_PEDIDO, p_DPEDIDO_PRDTO, p_DPEDIDO_CNTD, p_DPEDIDO_PRCIO);
 		p_respuesta.PEDIDO_CODIGO := 'OK';
 		p_respuesta.PEDIDO_MENSAJE := 'Detalle de pedido insertado correctamente.';
 		COMMIT;
       EXCEPTION
         WHEN OTHERS THEN
 		p_respuesta.PEDIDO_CODIGO := 'ERROR';
-		p_respuesta.PEDIDO_MENSAJE := 'Error al inserta el el pedido';
+		p_respuesta.PEDIDO_MENSAJE := 'Error al insertar el detalle de pedido';
             -- En caso de error, hacer rollback y lanzar la excepción
             ROLLBACK;
             RAISE;

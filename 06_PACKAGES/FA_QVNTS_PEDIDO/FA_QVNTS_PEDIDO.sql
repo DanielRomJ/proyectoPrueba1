@@ -62,23 +62,24 @@ create or replace PACKAGE BODY FA_QVNTS_PEDIDO AS
     -- PROCEDIMIENTOS Y FUNCIONES PUBLICOS
     -- ===========================================================
     -- Insertar un nuevo pedido
-    PROCEDURE insertar_pedido(
+     PROCEDURE insertar_pedido(
         q_pedido_clnt           IN       FA_TVNTS_PEDIDO.PEDIDO_CLNT%TYPE,
         q_pedido_fcrea          IN       FA_TVNTS_PEDIDO.PEDIDO_FCREA%TYPE,
 		p_respuesta       		OUT      FA_TY_TO_VNTS_RPSTA
     )IS
     BEGIN
 		p_respuesta := FA_TY_TO_VNTS_RPSTA(NULL,NULL,NULL);
-		p_respuesta.PEDIDO_PEDIDO := pedido_SEQ.nextval;
-        INSERT INTO FA_TVNTS_PEDIDO (PEDIDO_PEDIDO,PEDIDO_CLNT,PEDIDO_FCREA)
-        VALUES (p_respuesta.PEDIDO_PEDIDO,q_pedido_clnt,q_pedido_fcrea);
+		-- Generar un UUID usando SYS_GUID()
+		SELECT RAWTOHEX(SYS_GUID()) INTO p_respuesta.PEDIDO_PEDIDO FROM DUAL;
+        INSERT INTO FA_TVNTS_PEDIDO (PEDIDO_PEDIDO, PEDIDO_CLNT, PEDIDO_FCREA)
+        VALUES (p_respuesta.PEDIDO_PEDIDO, q_pedido_clnt, q_pedido_fcrea);
         p_respuesta.PEDIDO_CODIGO := 'OK';
 		p_respuesta.PEDIDO_MENSAJE := 'Pedido insertado correctamente.';
 		COMMIT;
       EXCEPTION
         WHEN OTHERS THEN
             p_respuesta.PEDIDO_CODIGO := 'ERROR';
-			p_respuesta.PEDIDO_MENSAJE := 'Error al inserta el el pedido';
+			p_respuesta.PEDIDO_MENSAJE := 'Error al insertar el pedido';
             ROLLBACK;
             RAISE;
     END insertar_pedido;

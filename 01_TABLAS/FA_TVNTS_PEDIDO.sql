@@ -10,7 +10,7 @@
 --
 CREATE TABLE FA_TVNTS_PEDIDO 
 (
-    PEDIDO_PEDIDO            INT ,
+    PEDIDO_PEDIDO            VARCHAR2(50) ,
     PEDIDO_CLNT              INT                                          constraint NN_FA_TVNTS_PEDIDO_PEDIDO_CLNT        NOT NULL,
     PEDIDO_FCREA             TIMESTAMP DEFAULT CURRENT_TIMESTAMP          constraint NN_FA_TVNTS_PEDIDO_PEDIDO_FCREA       NOT NULL
 );

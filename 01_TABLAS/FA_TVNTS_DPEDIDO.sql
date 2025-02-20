@@ -10,7 +10,7 @@
 --
 CREATE TABLE FA_TVNTS_DPEDIDO 
 (
-    DPEDIDO_DPEDIDO          INT ,
+    DPEDIDO_DPEDIDO          VARCHAR2(50),
     DPEDIDO_PEDIDO           INT             constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_PEDIDO         NOT NULL,
     DPEDIDO_PRDTO            INT             constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_PRDTO          NOT NULL,
     DPEDIDO_CNTD             INT             constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_CNTD           NOT NULL,

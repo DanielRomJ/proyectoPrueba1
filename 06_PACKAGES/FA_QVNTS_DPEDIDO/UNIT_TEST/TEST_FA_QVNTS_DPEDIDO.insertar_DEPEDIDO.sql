@@ -1,16 +1,17 @@
+
 DECLARE
-    
-    v_QDPEDIDO_QDPEDIDO FA_QVNTS_DPEDIDO.QDPEDIDO_QDPEDIDO%TYPE;
-  
+    v_respuesta FA_TY_TO_VNTS_DPRPSTA;
+	v_QDPEDIDO_QDPEDIDO FA_QVNTS_DPEDIDO.QDPEDIDO_QDPEDIDO%TYPE;
 BEGIN
-	v_QDPEDIDO_QDPEDIDO:=1:
-    -- Insertar un nuevo detalle de pedido
-    FA_QVNTS_DPEDIDO.INSERTAR_DPEDIDO( 
+    FA_QVNTS_DPEDIDO.insertar_DPEDIDO(
         QDPEDIDO_QDPEDIDO => v_QDPEDIDO_QDPEDIDO,
-        QDPEDIDO_QPEDIDO = 1,
-        QDPEDIDO_PRDTO = 2,
-        QDPEDIDO_CNTD = 1, 
-        QDPEDIDO_PRCIO = 1250000
-         );
-		DBMS_OUTPUT.PUT_LINE('v_QDPEDIDO_QDPEDIDO-------------------:'||v_QDPEDIDO_QDPEDIDO); 
+        p_DPEDIDO_PRDTO => 101,
+        p_DPEDIDO_CNTD => 2,
+        p_DPEDIDO_PRCIO => 50.00,
+        p_respuesta => v_respuesta
+    );
+    DBMS_OUTPUT.PUT_LINE('ID del detalle de pedido: ' || v_respuesta.DPEDIDO_DPEDIDO);
+    DBMS_OUTPUT.PUT_LINE('Código: ' || v_respuesta.PEDIDO_CODIGO);
+    DBMS_OUTPUT.PUT_LINE('Mensaje: ' || v_respuesta.PEDIDO_MENSAJE);
 END;
+/

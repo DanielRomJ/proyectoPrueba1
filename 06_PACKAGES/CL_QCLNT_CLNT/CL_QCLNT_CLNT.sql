@@ -149,7 +149,8 @@ CREATE OR REPLACE PACKAGE BODY CL_QCLNT_CLNT AS
 		FOR i IN c_tpid LOOP
 			BEGIN
 				v_tpid_exist := TRUE;
-				p_respuesta.clnt_clnt := CLIENTE_SEQ.nextval;
+				-- Generar un UUID usando SYS_GUID()
+				SELECT RAWTOHEX(SYS_GUID()) INTO p_respuesta.clnt_clnt FROM DUAL;
 				INSERT INTO CL_TCLNT_CLNT (CLNT_CLNT, CLNT_NOMB, CLNT_TPID, CLNT_NIT, CLNT_DIRE)
 				VALUES (p_respuesta.clnt_clnt, p_clnt_nomb, p_clnt_tpid, p_clnt_nit, p_clnt_dire);
 				p_respuesta.CLNT_CODIGO := 'OK';
@@ -163,7 +164,7 @@ CREATE OR REPLACE PACKAGE BODY CL_QCLNT_CLNT AS
 		END LOOP;
 		IF v_tpid_exist = FALSE THEN
 			p_respuesta.CLNT_CODIGO := 'ERROR';
-			p_respuesta.CLNT_MENSAJE := 'Error al inserta el cliente tipo de identificación no valido.';
+			p_respuesta.CLNT_MENSAJE := 'Error al insertar el cliente: tipo de identificación no válido.';
 		END IF;
 	END insertar_cliente;
 

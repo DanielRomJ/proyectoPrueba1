@@ -10,7 +10,7 @@
 --
 CREATE TABLE CL_TCLNT_CLNT 
 (
-    CLNT_CLNT                INT ,
+    CLNT_CLNT                VARCHAR2(50) ,
     CLNT_NOMB                VARCHAR(100)    constraint NN_CL_TCLNT_CLNT_CLNT_NOMB         NOT NULL,
     CLNT_TPID                VARCHAR(20)     constraint NN_CL_TCLNT_CLNT_CLNT_TPID         NOT NULL,
     CLNT_NIT                 INT             constraint NN_CL_TCLNT_CLNT_CLNT_NIT          NOT NULL,

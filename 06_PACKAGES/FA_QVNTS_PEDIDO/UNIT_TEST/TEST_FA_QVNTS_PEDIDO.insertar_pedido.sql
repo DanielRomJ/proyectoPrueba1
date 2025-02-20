@@ -1,14 +1,14 @@
+
 DECLARE
-    
-    v_PEDIDO_PEDIDO FA_QVNTS_PEDIDO.PEDIDO_PEDIDO%TYPE;
-  
+    v_respuesta FA_TY_TO_VNTS_RPSTA;
 BEGIN
-	v_PEDIDO_PEDIDO:= 1:
-    -- Insertar un nuevo pedido
-    FA_QVNTS_PEDIDO.insertar_pedido( 
-        Q_PEDIDO_PEDIDO => v_PEDIDO_PEDIDO;
-        Q_PEDIDO_CLNT => 1,
-        Q_PEDIDO_FCREA => CURRENT_timestamp
-        );
-		DBMS_OUTPUT.PUT_LINE('v_PEDIDO_PEDIDO-------------------:'||v_PEDIDO_PEDIDO); 
+    FA_QVNTS_PEDIDO.insertar_pedido(
+        q_pedido_clnt => 1,
+        q_pedido_fcrea => SYSDATE,
+        p_respuesta => v_respuesta
+    );
+    DBMS_OUTPUT.PUT_LINE('ID del pedido: ' || v_respuesta.PEDIDO_PEDIDO);
+    DBMS_OUTPUT.PUT_LINE('Código: ' || v_respuesta.PEDIDO_CODIGO);
+    DBMS_OUTPUT.PUT_LINE('Mensaje: ' || v_respuesta.PEDIDO_MENSAJE);
 END;
+/
