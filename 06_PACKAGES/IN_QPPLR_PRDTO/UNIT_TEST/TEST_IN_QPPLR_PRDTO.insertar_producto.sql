@@ -1,5 +1,5 @@
 DECLARE
-    v_prdto_id IN_TPPLR_PRDTO.PRDTO_PRDTO%TYPE;
+    v_prdto_id IN_QPPLR_PRDTO.PRDTO_PRDTO%TYPE;
 BEGIN
     IN_QPPLR_PRDTO.insertar_producto(
         p_PRDTO_PRDTO => v_prdto_id,

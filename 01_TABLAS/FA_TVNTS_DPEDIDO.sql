@@ -11,10 +11,10 @@
 CREATE TABLE FA_TVNTS_DPEDIDO 
 (
     DPEDIDO_DPEDIDO          VARCHAR2(50),
-    DPEDIDO_PEDIDO           INT             constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_PEDIDO         NOT NULL,
-    DPEDIDO_PRDTO            INT             constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_PRDTO          NOT NULL,
-    DPEDIDO_CNTD             INT             constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_CNTD           NOT NULL,
-    DPEDIDO_PRCIO            FLOAT           constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_PRCIO          NOT NULL
+    DPEDIDO_PEDIDO           VARCHAR2(50)             constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_PEDIDO         NOT NULL,
+    DPEDIDO_PRDTO            VARCHAR2(50)             constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_PRDTO          NOT NULL,
+    DPEDIDO_CNTD             INT             		  constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_CNTD           NOT NULL,
+    DPEDIDO_PRCIO            FLOAT         			  constraint NN_FA_TVNTS_DPEDIDO_DPEDIDO_PRCIO          NOT NULL
 );
 
 COMMENT ON COLUMN FA_TVNTS_DPEDIDO.DPEDIDO_DPEDIDO IS 'Identificador único de detalles de pedido';

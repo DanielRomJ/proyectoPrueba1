@@ -29,7 +29,7 @@ CREATE OR REPLACE PACKAGE IN_QPPLR_PRDTO AS
     -- ============================================================
 
 
-    -- -----------------------------------------------------------------
+    -- -----------------------------------------------------------------.....................
     -- insertar_producto
 	-- -----------------------------------------------------------------
     -- Insertar un nuevo producto
@@ -41,14 +41,14 @@ CREATE OR REPLACE PACKAGE IN_QPPLR_PRDTO AS
         p_PRDTO_PRCIO IN IN_TPPLR_PRDTO.PRDTO_PRCIO%TYPE
     );
 	    PROCEDURE actualizar_producto(
-        p_PRDTO_PRDTO    OUT     IN_TPPLR_PRDTO.PRDTO_PRDTO%TYPE,
+        p_PRDTO_PRDTO    IN     IN_TPPLR_PRDTO.PRDTO_PRDTO%TYPE,
         p_PRDTO_NOMB     IN      IN_TPPLR_PRDTO.PRDTO_NOMB%TYPE,
         p_PRDTO_DESC     IN      IN_TPPLR_PRDTO.PRDTO_DESC%TYPE,
         p_PRDTO_STCK     IN      IN_TPPLR_PRDTO.PRDTO_STCK%TYPE,
         p_PRDTO_PRCIO    IN      IN_TPPLR_PRDTO.PRDTO_PRCIO%TYPE
     );
     END IN_QPPLR_PRDTO;
-
+/
 CREATE OR REPLACE PACKAGE BODY IN_QPPLR_PRDTO AS
     --
     --

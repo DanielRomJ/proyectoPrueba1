@@ -11,7 +11,7 @@
 CREATE TABLE FA_TVNTS_PEDIDO 
 (
     PEDIDO_PEDIDO            VARCHAR2(50) ,
-    PEDIDO_CLNT              INT                                          constraint NN_FA_TVNTS_PEDIDO_PEDIDO_CLNT        NOT NULL,
+    PEDIDO_CLNT              VARCHAR2(50)                                          constraint NN_FA_TVNTS_PEDIDO_PEDIDO_CLNT        NOT NULL,
     PEDIDO_FCREA             TIMESTAMP DEFAULT CURRENT_TIMESTAMP          constraint NN_FA_TVNTS_PEDIDO_PEDIDO_FCREA       NOT NULL
 );
 COMMENT ON COLUMN FA_TVNTS_PEDIDO.PEDIDO_PEDIDO IS 'Identificador único del pedido.'; 
