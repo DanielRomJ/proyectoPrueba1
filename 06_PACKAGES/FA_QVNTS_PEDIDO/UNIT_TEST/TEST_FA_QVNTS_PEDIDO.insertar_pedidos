@@ -1,0 +1,29 @@
+DECLARE
+    v_pedidos FA_TY_TT_VNTS_PEDIDO := FA_TY_TT_VNTS_PEDIDO();
+    v_respuestas FA_TY_TT_VNTS_RPSTA;
+BEGIN
+    -- Extendemos la colección para 3 pedidos
+    v_pedidos.EXTEND(3);
+
+    -- Ejemplos de pedidos
+    v_pedidos(1) := FA_TY_TO_VNTS_PEDIDO('2EACB5A5C98D891DE0630E0EA8C0E6F2', SYSDATE); -- Pedido 1
+    v_pedidos(2) := FA_TY_TO_VNTS_PEDIDO('2EACB5A5C992891DE0630E0EA8C0E6F2', SYSDATE+1); -- Pedido 2
+    v_pedidos(3) := FA_TY_TO_VNTS_PEDIDO('2EACB5A5C991891DE0630E0EA8C0E6F2', SYSDATE+2); -- Pedido 3
+
+    -- Llamamos al procedimiento insertar_pedidos
+    FA_QVNTS_PEDIDO.insertar_pedidos(
+        p_pedidos => v_pedidos,
+        p_respuestas => v_respuestas
+    );
+
+    -- Mostramos las respuestas
+    FOR i IN 1 .. v_respuestas.COUNT LOOP
+        DBMS_OUTPUT.PUT_LINE('Respuesta para el pedido ' || i || ':');
+        DBMS_OUTPUT.PUT_LINE('  Código: ' || v_respuestas(i).PEDIDO_CODIGO);
+        DBMS_OUTPUT.PUT_LINE('  Mensaje: ' || v_respuestas(i).PEDIDO_MENSAJE);
+    END LOOP;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error inesperado: ' || SQLERRM);
+END;
+/

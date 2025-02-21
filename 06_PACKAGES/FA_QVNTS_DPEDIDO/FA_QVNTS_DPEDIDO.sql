@@ -90,7 +90,6 @@ CREATE OR REPLACE PACKAGE BODY FA_QVNTS_DPEDIDO AS
         VALUES (p_respuesta.DPEDIDO_DPEDIDO, p_DPEDIDO_PEDIDO, p_DPEDIDO_PRDTO, p_DPEDIDO_CNTD, p_DPEDIDO_PRCIO);
 		p_respuesta.PEDIDO_CODIGO := 'OK';
 		p_respuesta.PEDIDO_MENSAJE := 'Detalle de pedido insertado correctamente.';
-		COMMIT;
       EXCEPTION
         WHEN OTHERS THEN
 		p_respuesta.PEDIDO_CODIGO := 'ERROR';
